@@ -2,7 +2,6 @@
 #define XOLOTLTIMESTEPPER_H
 
 #include "TimeStepper.h"
-#include <interface.h>
 
 class XolotlTimeStepper;
 
@@ -25,9 +24,6 @@ private:
   Real _dt;
   std::string _ext_lib_path_name;
   std::string _func_name;
-  XolotlInterface interface;
-  std::shared_ptr<xolotlSolver::PetscSolver> solver;
-  int stepNumber;
 };
 
 #endif //XOLOTLTIMESTEPPER_H
