@@ -5,7 +5,7 @@ This is a [MOOSE](https://mooseframework.inl.gov/getting_started/index.html) app
 
 Here is how to install this application:
 ```
-git clone https://github.com/eastglow-zz/coupling_xolotl coupling_xolotl
+git clone https://github.com/SciDAC-MOOSE-Xolotl-coupling-group/coupling_xolotl.git
 cd coupling_xolotl
 git submodule init
 git submodule update
