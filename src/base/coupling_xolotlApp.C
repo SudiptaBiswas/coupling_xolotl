@@ -27,12 +27,10 @@ coupling_xolotlApp::~coupling_xolotlApp() {
 
 void coupling_xolotlApp::createInterface(FileName paramName) {
 	int argc = 2;
-	char **argv = new char*[argc];
+	const char* argv[argc + 1]{nullptr};
 	std::string fakeAppName = "bla";
-	argv[0] = new char[fakeAppName.length() + 1];
-	strcpy(argv[0], fakeAppName.c_str());
-	argv[1] = new char[paramName.length() + 1];
-	strcpy(argv[1], paramName.c_str());
+	argv[0] = fakeAppName.c_str();
+	argv[1] = paramName.c_str();
 
 	_interface->initializeXolotl(argc, argv, _comm->get());
 

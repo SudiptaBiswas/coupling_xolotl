@@ -17,13 +17,16 @@ endif
 PETSC_DIR          ?=$(MOOSE_DIR)/petsc
 PETSC_ARCH         ?=arch-moose
 
+# Kokkos
+KOKKOS_DIR         ?= $(CURDIR)/kokkos
+
 # Xolotl
 XOLOTL_DIR         ?= $(CURDIR)/xolotl
 
 # framework
 FRAMEWORK_DIR      := $(MOOSE_DIR)/framework
 
-ADDITIONAL_SRC_DEPS := $(XOLOTL_DIR)/build/include/interface.h
+ADDITIONAL_SRC_DEPS := $(XOLOTL_DIR)/install/include/interface.h
 
 include $(FRAMEWORK_DIR)/build.mk
 include $(FRAMEWORK_DIR)/moose.mk
@@ -61,10 +64,10 @@ include $(MOOSE_DIR)/modules/modules.mk
 
 # List XOLOTL as a dependency
 # Use ADDITIONAL flags to link XOLOTL
-XOLOTL_DEPEND_LIBS     := $(XOLOTL_DIR)/build/lib/libxolotlInter.$(lib_suffix)
+XOLOTL_DEPEND_LIBS     := $(XOLOTL_DIR)/install/lib/libxolotlInterface.$(lib_suffix)
 # -Wl,-rpath trikcy is used for load XOLOTL properly from executable
-ADDITIONAL_LIBS        += -L$(XOLOTL_DIR)/build/lib -Wl,-rpath,$(XOLOTL_DIR)/build/lib -lxolotlInter
-ADDITIONAL_INCLUDES    += -I$(XOLOTL_DIR)/build/include
+ADDITIONAL_LIBS        += -L$(XOLOTL_DIR)/install/lib -Wl,-rpath,$(XOLOTL_DIR)/install/lib -lxolotlInterface
+ADDITIONAL_INCLUDES    += -I$(XOLOTL_DIR)/install/include
 
 # dep apps
 APPLICATION_DIR    := $(CURDIR)
@@ -82,11 +85,17 @@ $(ADDITIONAL_SRC_DEPS): $(XOLOTL_DEPEND_LIBS)
 # TODO: should list all source files as a dependency
 # Then if source codes change, make will try to call "cmake"
 # "cmake" should build lib with updated source codes
-$(XOLOTL_DEPEND_LIBS): $(XOLOTL_DIR)/xolotl/xolotlSolver/Solver.cpp
-	cd xolotl; \
+$(XOLOTL_DEPEND_LIBS): $(XOLOTL_DIR)/xolotl/solver/src/Solver.cpp
+	cd kokkos; \
 	mkdir build; \
 	cd build; \
-	PETSC_DIR=$(PETSC_DIR) PETSC_ARCH=$(PETSC_ARCH) HDF5_ROOT=$(PETSC_DIR)/$(PETSC_ARCH) \
-	cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=mpicxx \
-	-DBUILD_SHARED_LIBS=yes -DCMAKE_CXX_FLAGS_RELEASE="-o3 -fPIC" ../xolotl; \
+	cmake -DCMAKE_INSTALL_PREFIX=$(KOKKOS_DIR)/install -DKokkos_ENABLE_SERIAL=ON \
+	-DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DKokkos_ENABLE_TESTS=OFF -DKokkos_CXX_STANDARD=17 .. ; \
+	make install; \
+	cd ../../xolotl; \
+	mkdir build; \
+	cd build; \
+	cmake -DCMAKE_BUILD_TYPE=Release -DKokkos_DIR=$(KOKKOS_DIR)/install -DPETSC_DIR=$(PETSC_DIR) \
+	-DPETSC_ARCH=$(PETSC_ARCH) -DHDF5_ROOT=$(PETSC_DIR)/$(PETSC_ARCH) -DCMAKE_CXX_COMPILER=mpicxx \
+	-DBUILD_SHARED_LIBS=yes -DCMAKE_CXX_FLAGS_RELEASE="-o3 -fPIC" -DCMAKE_INSTALL_PREFIX=$(XOLOTL_DIR)/install ..; \
 	make; make install \
