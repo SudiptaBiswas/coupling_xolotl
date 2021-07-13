@@ -27,7 +27,7 @@ coupling_xolotlApp::~coupling_xolotlApp() {
 
 void coupling_xolotlApp::createInterface(FileName paramName) {
 	int argc = 2;
-	const char* argv[argc + 1]{nullptr};
+	const char* argv[argc + 1];
 	std::string fakeAppName = "bla";
 	argv[0] = fakeAppName.c_str();
 	argv[1] = paramName.c_str();
