@@ -6,8 +6,8 @@
   [gmg]
     type = DistributedRectilinearMeshGenerator
     dim = 2
-    nx = 62
-    ny = 62
+    nx = 32
+    ny = 32
     xmin = 0
     xmax = 20000
     ymin = 0
@@ -817,7 +817,7 @@
   l_tol = 1.0e-5
   nl_rel_tol = 1.0e-8
   start_time = 0.0
-  num_steps = 10
+  num_steps = 2
   end_time = 1.2e8
   #end_time = 1.2e6
   nl_abs_tol = 1e-10

@@ -7,6 +7,7 @@ Here is how to install this application:
 ```
 git clone https://github.com/SciDAC-MOOSE-Xolotl-coupling-group/coupling_xolotl.git
 cd coupling_xolotl
+git checkout xolotl_plsm
 git submodule init
 git submodule update
 cd moose
@@ -32,3 +33,21 @@ make -j N
 for the coupling code.
 
 If you want 64bit indices support simply add the `--with-64-bit-indices` option with the PETSc script.
+
+Troubleshouting
+------
+
+**PETSc and MUMPS**
+
+If you get an error at the build PETSc step related to the MUMPS package, you can try to download this package [manually](https://bitbucket.org/petsc/pkg-mumps/get/v5.2.1-p2.tar.gz) and point to it through:
+```
+./scripts/update_and_rebuild_petsc.sh --download-hdf5 --download-mumps=/yourselectedlocation/packagename.tar.gz
+```
+
+**Clang and OpenMP**
+
+If you use Clang with OpenMP support but still get an error in the build libmesh step stating that your compiler does not support OpenMP, try setting:
+```
+export OPENMP_CXXFLAGS='-Xpreprocessor -fopenmp -lomp'
+export FFLAGS='-L/usr/local/lib'
+```
