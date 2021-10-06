@@ -20,14 +20,14 @@ public:
 
 	void createInterface(FileName paramName);
 
-	XolotlInterface & getInterface() {
+	XolotlInterface& getInterface() {
 		return _interface;
 	}
-	TS & getXolotlTS() {
+	TS& getXolotlTS() {
 		return _interface.getTS();
 	}
 	static void registerApps();
-	static void registerAll(Factory & f, ActionFactory & af, Syntax & s);
+	static void registerAll(Factory &f, ActionFactory &af, Syntax &s);
 
 	// For restart capabilities
 	std::shared_ptr<Backup> backup();
