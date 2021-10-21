@@ -37,7 +37,6 @@ void BubbleProblem::externalSolve() {
 	MeshBase &to_mesh = mesh().getMesh();
 	auto &bnds = getVariable(0, _bndsvar_name, Moose::VarKindType::VAR_ANY,
 			Moose::VarFieldType::VAR_FIELD_STANDARD);
-	unsigned int nnodes = to_mesh.n_nodes();
 
 	// Create a list of GB
 	std::vector<double> localGBList;
