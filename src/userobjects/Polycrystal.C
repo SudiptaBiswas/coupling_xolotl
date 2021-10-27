@@ -42,7 +42,8 @@ void Polycrystal::execute() {
 		std::vector<double> localGBList;
 
 //		auto &sys = _fe_problem.getSystem(_bndsvar_name);
-		auto &bnds = _fe_problem.getVariable(0, _bndsvar_name, Moose::VarKindType::VAR_ANY,
+		auto &bnds = _fe_problem.getVariable(0, _bndsvar_name,
+				Moose::VarKindType::VAR_ANY,
 				Moose::VarFieldType::VAR_FIELD_STANDARD);
 		for (const auto &node : as_range(_mesh.localNodesBegin(),
 				_mesh.localNodesEnd())) {
@@ -89,12 +90,8 @@ void Polycrystal::execute() {
 
 		// Receiving array
 		double broadcastedGB[totalSize];
-		MPI_Gatherv(localGBList.data(), toSend, MPI_DOUBLE, &broadcastedGB, counts,
-				displacements, MPI_DOUBLE, 0, comm().get());
-
-//		// Only work on one task now
-//		if (procId != 0)
-//			return;
+		MPI_Allgatherv(localGBList.data(), toSend, MPI_DOUBLE, &broadcastedGB,
+				counts, displacements, MPI_DOUBLE, comm().get());
 
 		MooseRandom::seed (_rand_seed);
 
@@ -102,15 +99,13 @@ void Polycrystal::execute() {
 		while (_bubble_loc.size() < _num_bub) {
 			// Get a random number
 			auto nPick = int(MooseRandom::rand() * (totalSize / 3));
-			auto xPick = broadcastedGB[3 * nPick], yPick = broadcastedGB[3 * nPick
-					+ 1], zPick = broadcastedGB[3 * nPick + 2];
+			auto xPick = broadcastedGB[3 * nPick], yPick = broadcastedGB[3
+					* nPick + 1], zPick = broadcastedGB[3 * nPick + 2];
 
 			// Add the bubble
-			Point bubble = Point( xPick, yPick, zPick );
+			Point bubble = Point(xPick, yPick, zPick);
 			_bubble_loc.push_back(bubble);
 		}
-
-		std::cout << "Created bubble list" << std::endl;
 	}
 
 	_executed = true;
