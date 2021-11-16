@@ -13,13 +13,20 @@
   op_num = 12
   var_name_base = etam
   int_width = 480
+  polycrystal_ic_uo = voronoi
+  invalue = 1.0
+  outvalue = 0.0
+  numbub = 8
+  bubspac = 4000
+  radius = 400
+  profile = TANH
 []
 
 [UserObjects]
   [./voronoi]
     type = PolycrystalVoronoi
     rand_seed = 1258
-    file_name = grains15_seed486.txt
+    file_name = grains15_seed486.txt #generated using MeshingGennie from Trillinos
   [../]
   [./grain_tracker]
     type = GrainTracker
@@ -53,55 +60,6 @@
     order = FIRST
     family = MONOMIAL
   [../]
-
-  [./halos]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo0]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo1]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo2]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo3]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo4]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo5]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo6]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo7]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo8]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo9]
-    order = FIRST
-    family = MONOMIAL
-  [../]
-  [./halo10]
-    order = FIRST
-    family = MONOMIAL
-  [../]
 []
 
 [AuxKernels]
@@ -129,115 +87,17 @@
     flood_counter = grain_tracker
     field_display = VARIABLE_COLORING
   [../]
-  [./halos]
-    type = FeatureFloodCountAux
-    variable = halos
-    flood_counter = grain_tracker
-    field_display = HALOS
-    execute_on = 'initial timestep_end'
-  [../]
-  [./halo0]
-    type = FeatureFloodCountAux
-    variable = halo0
-    map_index = 0
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo1]
-    type = FeatureFloodCountAux
-    variable = halo1
-    map_index = 1
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo2]
-    type = FeatureFloodCountAux
-    variable = halo2
-    map_index = 2
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo3]
-    type = FeatureFloodCountAux
-    variable = halo3
-    map_index = 3
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo4]
-    type = FeatureFloodCountAux
-    variable = halo4
-    map_index = 4
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo5]
-    type = FeatureFloodCountAux
-    variable = halo5
-    map_index = 5
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo6]
-    type = FeatureFloodCountAux
-    variable = halo6
-    map_index = 6
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo7]
-    type = FeatureFloodCountAux
-    variable = halo7
-    map_index = 7
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo8]
-    type = FeatureFloodCountAux
-    variable = halo8
-    map_index = 8
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo9]
-    type =  FeatureFloodCountAux
-    variable = halo9
-    map_index = 9
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
-  [./halo10]
-    type =  FeatureFloodCountAux
-    variable = halo10
-    map_index = 10
-    flood_counter = grain_tracker
-    field_display = HALOS
-  [../]
 []
 
 [ICs]
   [./PolycrystalICs]
     [./PolycrystalVoronoiVoidIC]
-      polycrystal_ic_uo = voronoi
-      invalue = 1.0
-      outvalue = 0.0
-      numbub = 8
-      bubspac = 4000
-      radius = 400
-      profile = TANH
     [../]
   [../]
   [./c_IC]
     type = PolycrystalVoronoiVoidIC
     variable = bubble
     structure_type = voids
-    polycrystal_ic_uo = voronoi
-    invalue = 1.0
-    outvalue = 0.0
-    numbub = 8
-    bubspac = 4000
-    radius = 400
-    profile = TANH
   [../]
 []
 
@@ -295,7 +155,6 @@
   [./bubble_fraction_new]
     type = ElementAverageValue
     variable = bubble
-    # outputs = csv
   [../]
 []
 
@@ -310,16 +169,13 @@
   l_tol = 1.0e-3
   num_steps = 100
   nl_rel_tol = 1.0e-8
-  # end_time = 1e8
   nl_abs_tol = 1e-9
   [./TimeStepper]
     type = IterationAdaptiveDT
     optimal_iterations = 5
     growth_factor = 1.2
     cutback_factor = 0.8
-    # dt = 0.5
     dt = 1
-    # adapt_log = true
   [../]
 []
 
