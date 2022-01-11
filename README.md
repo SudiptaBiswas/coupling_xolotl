@@ -11,7 +11,7 @@ git checkout xolotl_plsm
 git submodule init
 git submodule update
 cd moose
-./scripts/update_and_rebuild_petsc.sh --download-hdf5
+./scripts/update_and_rebuild_petsc.sh --download-hdf5 --download-boost
 ./scripts/update_and_rebuild_libmesh.sh
 cd ..
 make
@@ -32,7 +32,9 @@ make -j N
 ```
 for the coupling code.
 
-If you want 64bit indices support simply add the `--with-64-bit-indices` option with the PETSc script.
+If you have your own Boost installation you can define `BOOST_ROOT` before starting the installation.
+
+If you have your own MOOSE installation you can define `MOOSE_DIR` and skip libmesh and potentially PETSc.
 
 Troubleshouting
 ------
