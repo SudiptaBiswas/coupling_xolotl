@@ -48,7 +48,7 @@
   invalue = 1.0
   outvalue = 0.0
   numbub = 650
-  bubspac = 800
+  bubspac = 1200
   radius = 400
   profile = TANH
 []
@@ -498,7 +498,6 @@
 [Postprocessors]
   [./num_DOF]
     type = NumDOFs
-    system = NL
   [../]
   [./dt]
     type = TimestepSize

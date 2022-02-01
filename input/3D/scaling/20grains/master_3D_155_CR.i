@@ -6,11 +6,11 @@
     ny = 155
     nz = 155
     xmin = 0
-    xmax = 25000
+    xmax = 24955
     ymin = 0
-    ymax = 25000
+    ymax = 24955
     zmin = 0
-    zmax = 25000
+    zmax = 25955
   []
 []
 
@@ -48,7 +48,7 @@
   invalue = 1.0
   outvalue = 0.0
   numbub = 1250
-  bubspac = 800
+  bubspac = 1200
   radius = 400
   profile = TANH
 []
