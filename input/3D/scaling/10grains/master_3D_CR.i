@@ -498,6 +498,7 @@
 [Postprocessors]
   [./num_DOF]
     type = NumDOFs
+    system = NL
   [../]
   [./dt]
     type = TimestepSize

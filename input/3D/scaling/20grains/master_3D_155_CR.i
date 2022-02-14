@@ -10,7 +10,7 @@
     ymin = 0
     ymax = 24955
     zmin = 0
-    zmax = 25955
+    zmax = 24955
   []
 []
 

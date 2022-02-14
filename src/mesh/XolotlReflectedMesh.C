@@ -101,7 +101,7 @@ void add_element_Edge2(DM da, const dof_id_type nx, const dof_id_type i,
 
 	const PetscInt *lx;
 	PetscInt *lxo;
-	DMGetWorkArray(da, xp + 2, MPIU_INT, &lxo);
+	DMGetWorkArray(da, xp + 1, MPIU_INT, &lxo);
 	// Gets the ranges of indices in the x, y and z direction that are owned by each process
 	// Ranges here are different from what we have in Mat and Vec.
 	// It means how many points each processor holds
@@ -120,7 +120,7 @@ void add_element_Edge2(DM da, const dof_id_type nx, const dof_id_type i,
 	PetscFindInt(i + 1, xp + 1, lxo, &xpidplus);
 	xpidplus = xpidplus < 0 ? -xpidplus - 1 - 1 : xpidplus;
 
-	DMRestoreWorkArray(da, xp + 2, MPIU_INT, &lxo);
+	DMRestoreWorkArray(da, xp + 1, MPIU_INT, &lxo);
 
 	// Get the geometry of the Xolotl grid information
 	double hy = 0.0, hz = 0.0;
@@ -289,7 +289,7 @@ void add_element_Hex8(DM da, const dof_id_type nx, const dof_id_type ny,
 
 	const PetscInt *lx, *ly, *lz;
 	PetscInt *lxo, *lyo, *lzo;
-	DMGetWorkArray(da, xp + yp + zp + 2, MPIU_INT, &lxo);
+	DMGetWorkArray(da, xp + yp + zp + 3, MPIU_INT, &lxo);
 // Gets the ranges of indices in the x, y and z direction that are owned by each process
 // Ranges here are different from what we have in Mat and Vec.
 // It means how many points each processor holds
@@ -328,7 +328,7 @@ void add_element_Hex8(DM da, const dof_id_type nx, const dof_id_type ny,
 	PetscFindInt(k + 1, zp + 1, lzo, &zpidplus);
 	zpidplus = zpidplus < 0 ? -zpidplus - 1 - 1 : zpidplus;
 
-	DMRestoreWorkArray(da, xp + yp + zp + 2, MPIU_INT, &lxo);
+	DMRestoreWorkArray(da, xp + yp + zp + 3, MPIU_INT, &lxo);
 
 // Get the geometry of the Xolotl grid information
 	double hy = 0.0, hz = 0.0;
