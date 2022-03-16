@@ -62,6 +62,15 @@ POROUS_FLOW         := no
 
 include $(MOOSE_DIR)/modules/modules.mk
 
+# MARMOT (optional)
+MARMOT_DIR          ?= $(shell dirname `pwd`)/marmot
+ifneq ($(wildcard $(MARMOT_DIR)/Makefile),)
+	# $(info Found marmot, so compiling with it.)
+  APPLICATION_DIR    := $(MARMOT_DIR)
+  APPLICATION_NAME   := marmot
+  include            $(FRAMEWORK_DIR)/app.mk
+endif
+
 # List XOLOTL as a dependency
 # Use ADDITIONAL flags to link XOLOTL
 XOLOTL_DEPEND_LIBS     := $(XOLOTL_DIR)/install/lib/libxolotlInterface.$(lib_suffix)
