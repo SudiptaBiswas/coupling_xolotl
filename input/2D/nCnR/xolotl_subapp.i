@@ -61,3 +61,8 @@
   end_time = 1.2e8
   # end_time = 20000.0
 []
+
+[Outputs]
+  exodus = true
+  csv = true
+[]
