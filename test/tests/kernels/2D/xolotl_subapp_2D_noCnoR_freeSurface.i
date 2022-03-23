@@ -4,7 +4,7 @@
 [Mesh]
   type = XolotlReflectedMesh
   dim = 2
-  XolotlInput_path_name = './param_2D_noCnoR.txt'
+  XolotlInput_path_name = './param_2D_noCnoR_freeSurface.txt'
 []
 
 [AuxVariables]
@@ -24,6 +24,18 @@
     order = FIRST
     family = LAGRANGE
   [../]
+  [./AuxPid]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+[]
+
+[AuxKernels]
+  [pid_aux]
+    type = ProcessorIDAux
+    variable = AuxPid
+    execute_on = 'INITIAL'
+  []
 []
 
 [Problem]
@@ -60,9 +72,8 @@
   [../]
   start_time = 0
   end_time = 1.2e8
-  num_steps = 10  
+  # end_time = 20000.0
 []
-
 
 [Outputs]
   exodus = true

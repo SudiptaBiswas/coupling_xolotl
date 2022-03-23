@@ -2,6 +2,7 @@ petscArgs=-fieldsplit_1_pc_gamg_threshold -1 -ts_max_steps 1000 -xenon_retention
 vizHandler=dummy
 flux=8.0e-9
 boundary=0 0 0 0 0 0
+xBCType=periodic
 netParam=400000 0 0 0 0
 gridParam=126 160 126 160 126 160
 material=Fuel
