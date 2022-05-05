@@ -32,6 +32,7 @@
  sync_GB = AuxGB
  sync_mono = AuxMono
  sync_frac = AuxFrac
+ free_surface = no
 []
 
 [Variables]
