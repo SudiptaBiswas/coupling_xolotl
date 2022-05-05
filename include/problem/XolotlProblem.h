@@ -43,6 +43,7 @@ private:
 	const VariableName &_sync_gb;
 	const VariableName &_sync_mono;
 	const VariableName &_sync_frac;
+	bool _free_surface;
 	std::shared_ptr<XolotlInterface> _interface;
 	Real _dt_for_derivative;
 	std::vector<std::vector<std::vector<Real> > > &_old_rate;

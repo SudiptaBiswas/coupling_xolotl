@@ -26,6 +26,8 @@ InputParameters validParams<XolotlProblem>() {
 			> ("sync_mono", "The variable the monomer will be synced to");
 	params.addRequiredParam < VariableName
 			> ("sync_frac", "The variable the V fraction will be synced to");
+	params.addRequiredParam<bool>("free_surface",
+			"Whether a free surface should be used");
 	return params;
 }
 template<>
@@ -51,7 +53,8 @@ XolotlProblem::XolotlProblem(const InputParameters &params) :
 				getParam < VariableName > ("sync_rate")), _sync_gb(
 				getParam < VariableName > ("sync_GB")), _sync_mono(
 				getParam < VariableName > ("sync_mono")), _sync_frac(
-				getParam < VariableName > ("sync_frac")), _interface(
+				getParam < VariableName > ("sync_frac")), _free_surface(
+				getParam<bool>("free_surface")), _interface(
 				static_cast<coupling_xolotlApp&>(_app).getInterface()), _old_rate(
 				declareRestartableData
 						< std::vector<std::vector<std::vector<Real> > >
@@ -68,7 +71,10 @@ XolotlProblem::XolotlProblem(const InputParameters &params) :
 						< std::vector<
 								std::vector<
 										std::vector<
-												std::vector<std::pair<xolotl::IdType, Real> > > > >
+												std::vector<
+														std::pair<
+																xolotl::IdType,
+																Real> > > > >
 						> ("conc_vector")) {
 	xolotl::IdType xs, ys, zs, xm, ym, zm, Mx, My, Mz;
 	_interface->getLocalCoordinates(xs, xm, Mx, ys, ym, My, zs, zm, Mz);
@@ -184,8 +190,16 @@ void XolotlProblem::syncSolutions(Direction direction) {
 							sync_gb.sys().number(), sync_gb.number(), 0);
 					// Get the value
 					Real value = sync_gb.sys().solution()(dof);
+					bool already_added = false;
 					// Test if it is a GB
 					if (value < 0.9) {
+						localGBList.push_back(i);
+						localGBList.push_back(j);
+						localGBList.push_back(k);
+						already_added = true;
+					}
+					// Free surface BC
+					if (_free_surface and i == 0 and not already_added) {
 						localGBList.push_back(i);
 						localGBList.push_back(j);
 						localGBList.push_back(k);

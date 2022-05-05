@@ -29,6 +29,15 @@
     max_parallel = 4
     allow_warnings = True
   [../]
+  [./PF_as_master_freeSurface]
+    type = 'Exodiff'
+    input = 'PFmulti_master_2D_noCnoR_freeSurface.i'
+    exodiff = 'PFmulti_master_2D_noCnoR_freeSurface_exodus.e PFmulti_master_2D_noCnoR_freeSurface_out_sub_app0.e'
+    allow_unused = True
+    min_parallel = 1
+    max_parallel = 1
+    allow_warnings = True
+  [../]
   [./Xolotl_standalone]
     type = 'CheckFiles'
     input = 'xolotl_standalone_2D_noCnoR.i'
