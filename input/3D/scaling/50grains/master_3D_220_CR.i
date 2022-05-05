@@ -6,11 +6,11 @@
     ny = 221
     nz = 221
     xmin = 0
-    xmax = 35000
+    xmax = 34918
     ymin = 0
-    ymax = 35000
+    ymax = 34918
     zmin = 0
-    zmax = 35000
+    zmax = 34918
   []
 []
 
@@ -48,18 +48,21 @@
   invalue = 1.0
   outvalue = 0.0
   numbub = 3400
-  bubspac = 800
+  bubspac = 1200
   radius = 400
   profile = TANH
 []
 
 [UserObjects]
   [voronoi]
-    type = FauxPolycrystalVoronoi
+    type = PolycrystalVoronoi
     coloring_algorithm = jp
     output_adjacency_matrix = false
     # coloring_algorithm = bt # We must use bt to force the UserObject to assign one grain to each op
     rand_seed = 15 #4586
+    use_kdtree = true
+    point_patch_size = 1
+    grain_patch_size = 40
   []
   [./grain_tracker]
     type = GrainTracker
