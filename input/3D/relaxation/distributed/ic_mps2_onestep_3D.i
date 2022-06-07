@@ -6,9 +6,9 @@
   [gmg]
     type = DistributedRectilinearMeshGenerator
     dim = 3
-    nx = 25
-    ny = 25
-    nz = 25
+    nx = 125
+    ny = 125
+    nz = 125
     xmin = 0
     xmax = 20000
     ymin = 0
@@ -22,7 +22,7 @@
 [GlobalParams]
   op_num = 25
   var_name_base = etam
-  grain_num = 20
+  # grain_num = 20
   int_width = 480
   polycrystal_ic_uo = voronoi
   invalue = 1.0
@@ -39,7 +39,8 @@
     coloring_algorithm = jp
     output_adjacency_matrix = false
     # coloring_algorithm = bt # We must use bt to force the UserObject to assign one grain to each op
-    rand_seed = 15 #4586
+    rand_seed = 5 #4586
+    file_name = grains19_3D_seed4586.txt # grains17_3D_seed5.txt grains30_3D_seed5.txt grains19_3D_seed4586.txt
   []
   [grain_tracker]
     type = GrainTracker
