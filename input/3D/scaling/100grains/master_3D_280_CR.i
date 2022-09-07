@@ -2,15 +2,15 @@
   [gmg]
     type = DistributedRectilinearMeshGenerator
     dim = 3
-    nx = 221
-    ny = 221
-    nz = 221
+    nx = 281
+    ny = 281
+    nz = 281
     xmin = 0
-    xmax = 34918
+    xmax = 44960
     ymin = 0
-    ymax = 34918
+    ymax = 44960
     zmin = 0
-    zmax = 34918
+    zmax = 44960
   []
 []
 
@@ -42,12 +42,12 @@
 [GlobalParams]
   op_num = 25
   var_name_base = etam
-  grain_num = 50
+  grain_num = 100
   int_width = 480
   polycrystal_ic_uo = voronoi
   invalue = 1.0
   outvalue = 0.0
-  numbub = 3400
+  numbub = 7050
   bubspac = 1200
   radius = 400
   profile = TANH
@@ -580,7 +580,7 @@
   [./sub_app]
     type = TransientMultiApp
     positions = '0 0 0'
-    input_files = 'xolotl_3D_220_CR.i'
+    input_files = 'xolotl_3D_280_CR.i'
     app_type = coupling_xolotlApp
     execute_on = TIMESTEP_END
     library_path = 'lib'
@@ -609,7 +609,7 @@
 [Outputs]
   [./nemesis]
     type = Nemesis
-#    interval = 10
+    interval = 10
   [../]
   perf_graph = true
   csv = true

@@ -4,7 +4,7 @@
 [Mesh]
   type = XolotlReflectedMesh
   dim = 3
-  XolotlInput_path_name = './param_3D_155_CR.txt'
+  XolotlInput_path_name = './param_3D_280_CR.txt'
 []
 
 [AuxVariables]
@@ -65,7 +65,7 @@
 
 [Outputs]
   [./nemesis]
-#    interval = 10
+    interval = 10
     type = Nemesis
   [../]
 []
