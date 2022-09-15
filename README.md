@@ -7,7 +7,6 @@ Here is how to install this application:
 ```
 git clone https://github.com/SciDAC-MOOSE-Xolotl-coupling-group/coupling_xolotl.git
 cd coupling_xolotl
-git checkout xolotl_plsm
 git submodule init
 git submodule update
 cd moose

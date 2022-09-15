@@ -11,6 +11,7 @@
     ymax = 24955
     zmin = 0
     zmax = 24955
+    partition = square
   []
 []
 
@@ -88,6 +89,14 @@
     family = MONOMIAL
   [../]
   [./XolotlXeRate]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+  [./XolotlXeMono]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+  [./XolotlVolumeFraction]
     order = FIRST
     family = LAGRANGE
   [../]
@@ -537,6 +546,22 @@
     variable = bubble
     threshold = 0.3
   [../]
+  [./XolotlXeMono_time]
+    type = ElementAverageValue
+    variable = XolotlXeMono
+  [../] 
+  [./XolotlXeRate_time]
+    type = ElementAverageValue
+    variable = XolotlXeRate
+  [../]
+  [./cg_time]
+    type = ElementAverageValue
+    variable = cg
+  [../]
+  [./cv_time]
+    type = ElementAverageValue
+    variable = cv
+  [../]
 []
 
 [Executioner]
@@ -601,7 +626,7 @@
 [Outputs]
   [./nemesis]
     type = Nemesis
-#    interval = 10
+    interval = 10
   [../]
   perf_graph = true
   csv = true

@@ -11,6 +11,7 @@
     ymax = 20000
     zmin = 0
     zmax = 20000
+    partition = square
   []
 []
 
@@ -88,6 +89,15 @@
     family = MONOMIAL
   [../]
   [./XolotlXeRate]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+  [./XolotlXeMono]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+
+  [./XolotlVolumeFraction]
     order = FIRST
     family = LAGRANGE
   [../]
@@ -496,6 +506,14 @@
 []
 
 [Postprocessors]
+  [./XolotlXeMono_time]
+    type = ElementAverageValue
+    variable = XolotlXeMono
+  [../] 
+  [./XolotlXeRate_time]
+    type = ElementAverageValue
+    variable = XolotlXeRate
+  [../] 
   [./num_DOF]
     type = NumDOFs
     system = NL
@@ -536,6 +554,14 @@
     type = FeatureFloodCount
     variable = bubble
     threshold = 0.3
+  [../]
+  [./cg_time]
+    type = ElementAverageValue
+    variable = cg
+  [../]
+  [./cv_time]
+    type = ElementAverageValue
+    variable = cv
   [../]
 []
 
@@ -601,7 +627,7 @@
 [Outputs]
   [./nemesis]
     type = Nemesis
-#    interval = 10
+    interval = 10
   [../]
   perf_graph = true
   csv = true

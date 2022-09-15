@@ -11,6 +11,7 @@
     ymax = 44960
     zmin = 0
     zmax = 44960
+    partition = square
   []
 []
 
@@ -51,6 +52,7 @@
   bubspac = 1200
   radius = 400
   profile = TANH
+  enable_jit=false
 []
 
 [UserObjects]
@@ -99,6 +101,14 @@
     order = FIRST
     family = LAGRANGE
   [../]
+  [./XolotlXeMono]
+     order = FIRST
+     family = LAGRANGE
+   [../]
+   [./XolotlVolumeFraction]
+     order = FIRST
+     family = LAGRANGE
+   [../]
 []
 
 [AuxKernels]
@@ -545,6 +555,22 @@
     variable = bubble
     threshold = 0.3
   [../]
+  [./XolotlXeMono_time]
+     type = ElementAverageValue
+     variable = XolotlXeMono
+   [../]
+   [./XolotlXeRate_time]
+     type = ElementAverageValue
+     variable = XolotlXeRate
+   [../]
+   [./cg_time]
+     type = ElementAverageValue
+     variable = cg
+   [../]
+   [./cv_time]
+     type = ElementAverageValue
+     variable = cv
+   [../]
 []
 
 [Executioner]

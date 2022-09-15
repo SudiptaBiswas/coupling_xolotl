@@ -65,7 +65,7 @@
 
 [Outputs]
   [./nemesis]
-#    interval = 10
+    interval = 10
     type = Nemesis
   [../]
 []
