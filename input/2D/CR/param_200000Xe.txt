@@ -1,0 +1,16 @@
+petscArgs=-largest_conc 1.0e-10 -snes_stol 1.0e-12 -fieldsplit_1_pc_gamg_threshold -1 -ts_max_steps 1000 -xenon_retention -ts_max_time 2.0e8 -ts_adapt_dt_max 5.0e3 -ts_dt 1.0e-1 -ts_exact_final_time matchstep -fieldsplit_0_pc_type sor -ts_max_snes_failures -1 -pc_fieldsplit_detect_coupling -ts_monitor -pc_type fieldsplit -fieldsplit_1_pc_type gamg -fieldsplit_1_ksp_type gmres -ksp_type fgmres
+vizHandler=dummy
+flux=1.09e-8
+boundary=0 0 0 0
+networkFile=network_2D_101_101.h5
+netParam=400000 0 0 0 0
+gridParam=101 12.5 101 12.5
+material=Fuel
+dimensions=2
+perfHandler=dummy
+tempParam=1200
+grouping=101 2
+process=diff reaction resolution
+voidPortion=0.0
+#regularGrid=yes
+initialV=0.0
