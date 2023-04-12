@@ -27,10 +27,10 @@
 #include <cmath> // provides round, not std::round (see http://www.cplusplus.com/reference/cmath/round/)
 
 registerMooseObject("coupling_xolotlApp", XolotlReflectedMesh);
+InputParameters XolotlReflectedMesh::validParams() {
+	InputParameters params = MooseMesh::validParams();
 
-template<>
-InputParameters validParams<XolotlReflectedMesh>() {
-	InputParameters params = validParams<MooseMesh>();
+	params.addClassDescription("Create a square mesh from PETSc DMDA.");
 
 	// This mesh is always distributed
 	params.set < MooseEnum > ("parallel_type") = "DISTRIBUTED";
@@ -45,11 +45,9 @@ InputParameters validParams<XolotlReflectedMesh>() {
 XolotlReflectedMesh::XolotlReflectedMesh(const InputParameters &parameters) :
 		MooseMesh(parameters), _xolotl_input_path_name(
 				getParam < FileName > ("XolotlInput_path_name")), _dim(
-				getParam < MooseEnum > ("dim"))
-{
+				getParam < MooseEnum > ("dim")) {
 	// Get the external app to create the interface and its grid
-	coupling_xolotlApp *xolotl_app =
-			dynamic_cast<coupling_xolotlApp*>(&_app);
+	coupling_xolotlApp *xolotl_app = dynamic_cast<coupling_xolotlApp*>(&_app);
 	// Create the interface to initialiaze the DMDA
 	xolotl_app->createInterface(_xolotl_input_path_name);
 	// Now we can get the TS from the app
@@ -732,15 +730,15 @@ void XolotlReflectedMesh::buildMesh() {
 	switch (_dim) {
 	case 1:
 		build_cube_Edge2(dynamic_cast<UnstructuredMesh&>(getMesh()), _dmda,
-				 *interface);
+				*interface);
 		break;
 	case 2:
 		build_cube_Quad4(dynamic_cast<UnstructuredMesh&>(getMesh()), _dmda,
-				 *interface);
+				*interface);
 		break;
 	case 3:
 		build_cube_Hex8(dynamic_cast<UnstructuredMesh&>(getMesh()), _dmda,
-				 *interface);
+				*interface);
 		break;
 	default:
 		mooseError("Does not support dimension ", _dim, "yet");

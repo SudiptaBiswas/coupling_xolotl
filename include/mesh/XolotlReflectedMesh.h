@@ -12,11 +12,6 @@
 
 #include "MooseMesh.h"
 
-class XolotlReflectedMesh;
-
-template<>
-InputParameters validParams<XolotlReflectedMesh>();
-
 /**
  * Generate a parallel (distributed) mesh from PETSc DMDA.
  * DMDA could be passed in from an application such as ExternalPetscSolverApp
@@ -27,6 +22,8 @@ InputParameters validParams<XolotlReflectedMesh>();
  */
 class XolotlReflectedMesh: public MooseMesh {
 public:
+	static InputParameters validParams();
+
 	XolotlReflectedMesh(const InputParameters &parameters);
 	XolotlReflectedMesh(const XolotlReflectedMesh& /* other_mesh */) = default;
 

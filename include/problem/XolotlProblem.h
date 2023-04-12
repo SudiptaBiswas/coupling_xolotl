@@ -13,16 +13,13 @@
 #include "ExternalProblem.h"
 #include "coupling_xolotlApp.h"
 
-class XolotlProblem;
-
-template<>
-InputParameters validParams<XolotlProblem>();
-
 /**
  * This is an interface to call an external solver
  */
 class XolotlProblem: public ExternalProblem {
 public:
+	static InputParameters validParams();
+
 	XolotlProblem(const InputParameters &params);
 	~XolotlProblem() {
 		_interface->finalizeXolotl();
@@ -56,7 +53,9 @@ private:
 	Real &_previous_time;
 	Real &_n_xenon;
 	std::vector<std::vector<std::vector<std::array<Real, 4> > > > &_local_NE;
-	std::vector<std::vector<std::vector<std::vector<std::pair<xolotl::IdType, Real> > > > > &_conc_vector;
+	std::vector<
+			std::vector<
+					std::vector<std::vector<std::pair<xolotl::IdType, Real> > > > > &_conc_vector;
 
 };
 

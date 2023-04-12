@@ -15,9 +15,8 @@ using std::max;
 
 registerMooseObject("coupling_xolotlApp", XolotlProblem);
 
-template<>
-InputParameters validParams<XolotlProblem>() {
-	InputParameters params = validParams<ExternalProblem>();
+InputParameters XolotlProblem::validParams() {
+	InputParameters params = ExternalProblem::validParams();
 	params.addRequiredParam < VariableName
 			> ("sync_rate", "The variable the rate will be synced to");
 	params.addRequiredParam < VariableName
@@ -30,6 +29,7 @@ InputParameters validParams<XolotlProblem>() {
 			"Whether a free surface should be used");
 	return params;
 }
+
 template<>
 void dataStore(std::ostream &stream, std::tuple<Real, Real, Real, Real> &foo,
 		void *context) {
