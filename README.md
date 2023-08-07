@@ -4,15 +4,16 @@ coupling_xolotl
 This is a [MOOSE](https://mooseframework.inl.gov/getting_started/index.html) application wrapping [Xolotl](https://github.com/ORNL-Fusion/xolotl/wiki) a cluster dynamics code.
 
 Here is how to install this application:
+
+First setup a conda environment following the steps from [here](https://mooseframework.inl.gov/getting_started/installation/conda.html); install boost with `mamba install boost`.
+
+Then get the code:
+
 ```
 git clone https://github.com/SciDAC-MOOSE-Xolotl-coupling-group/coupling_xolotl.git
 cd coupling_xolotl
 git submodule init
 git submodule update
-cd moose
-./scripts/update_and_rebuild_petsc.sh --download-hdf5 --download-boost
-./scripts/update_and_rebuild_libmesh.sh
-cd ..
 make
 ```
 
@@ -23,27 +24,13 @@ Tests can be run through:
 
 If your machine has N cores available the installation can go faster by using:
 ```
-MOOSE_JOBS=N ./scripts/update_and_rebuild_libmesh.sh
-```
-for libMesh; and:
-```
 make -j N
 ```
-for the coupling code.
 
 If you have your own Boost installation you can define `BOOST_ROOT` before starting the installation.
 
-If you have your own MOOSE installation you can define `MOOSE_DIR` and skip libmesh and potentially PETSc.
-
 Troubleshouting
 ------
-
-**PETSc and MUMPS**
-
-If you get an error at the build PETSc step related to the MUMPS package, you can try to download this package [manually](https://bitbucket.org/petsc/pkg-mumps/get/v5.2.1-p2.tar.gz) and point to it through:
-```
-./scripts/update_and_rebuild_petsc.sh --download-hdf5 --download-mumps=/yourselectedlocation/packagename.tar.gz
-```
 
 **Clang and OpenMP**
 
