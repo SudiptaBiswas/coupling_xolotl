@@ -5,7 +5,7 @@ This is a [MOOSE](https://mooseframework.inl.gov/getting_started/index.html) app
 
 Here is how to install this application:
 
-First setup a conda environment following the steps from [here](https://mooseframework.inl.gov/getting_started/installation/conda.html); install boost with `mamba install boost`.
+First setup a conda environment following the steps from [here](https://mooseframework.inl.gov/getting_started/installation/conda.html); install boost with `mamba install boost=1.78.0`.
 
 Then get the code:
 
