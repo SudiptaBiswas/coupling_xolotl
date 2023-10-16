@@ -49,7 +49,7 @@ void coupling_xolotlApp::registerApps() {
 	registerApp (coupling_xolotlApp);
 }
 
-std::shared_ptr<Backup> coupling_xolotlApp::backup() {
+void coupling_xolotlApp::preBackup() {
 	if (_is_xolotl_app) {
 		// Get the state from Xolotl
 		mooseAssert(_executioner, "Executioner is nullptr");
@@ -57,16 +57,9 @@ std::shared_ptr<Backup> coupling_xolotlApp::backup() {
 				(XolotlProblem&) _executioner->feProblem();
 		xolotl_problem.saveState();
 	}
-
-	// Back it up
-	return MooseApp::backup();
 }
 
-void coupling_xolotlApp::restore(std::shared_ptr<Backup> backup,
-		bool for_restart) {
-	// Restore the state
-	MooseApp::restore(backup, for_restart);
-
+void coupling_xolotlApp::postRestore(bool /*for_restart*/) {
 	if (_is_xolotl_app) {
 		// Set it in Xolotl
 		mooseAssert(_executioner, "Executioner is nullptr");
