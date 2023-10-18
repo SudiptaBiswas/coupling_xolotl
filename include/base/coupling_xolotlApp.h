@@ -34,8 +34,8 @@ public:
 	static void registerAll(Factory &f, ActionFactory &af, Syntax &s);
 
 	// For restart capabilities
-	std::shared_ptr<Backup> backup();
-	void restore(std::shared_ptr<Backup> backup, bool for_restart = false);
+	virtual void preBackup() override;
+	virtual void postRestore(bool for_restart = false) override;
 
 private:
 	std::shared_ptr<XolotlInterface> _interface;

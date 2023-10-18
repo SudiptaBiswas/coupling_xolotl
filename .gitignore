@@ -209,3 +209,7 @@ python/peacock/tests/postprocessor_tab/TestPostprocessorPluginManager_test_scrip
 !python/peacock/icons/**/*.*
 !python/peacock/tests/**/input/*.*
 peacock_tmp_diff.exo
+
+# Generated resource files
+coupling_xolotl.yaml
+unit/coupling_xolotl-unit.yaml
