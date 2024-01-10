@@ -16,47 +16,44 @@
 /**
  * This is an interface to call an external solver
  */
-class XolotlProblem: public ExternalProblem {
+class XolotlProblem : public ExternalProblem
+{
 public:
-	static InputParameters validParams();
+  static InputParameters validParams();
 
-	XolotlProblem(const InputParameters &params);
-	~XolotlProblem() {
-		_interface->finalizeXolotl();
-	}
+  XolotlProblem(const InputParameters & params);
+  ~XolotlProblem() { _interface->finalizeXolotl(); }
 
-	virtual void externalSolve() override;
-	virtual void syncSolutions(Direction /*direction*/) override;
+  virtual void externalSolve() override;
+  virtual void syncSolutions(Direction /*direction*/) override;
 
-	virtual bool converged() override;
+  virtual bool converged();
 
-	// Methods for restart
-	void saveState();
-	void setState();
+  // Methods for restart
+  void saveState();
+  void setState();
 
 private:
-/// The name of the variable to transfer to
-	const VariableName &_sync_rate;
-	const VariableName &_sync_gb;
-	const VariableName &_sync_mono;
-	const VariableName &_sync_frac;
-	bool _free_surface;
-	std::shared_ptr<XolotlInterface> _interface;
-	Real _dt_for_derivative;
-	std::vector<std::vector<std::vector<Real> > > &_old_rate;
-	std::vector<int> _gb_list;
-	Real &_current_time;
-	bool _xolotl_has_run;
+  /// The name of the variable to transfer to
+  const VariableName & _sync_rate;
+  const VariableName & _sync_gb;
+  const VariableName & _sync_mono;
+  const VariableName & _sync_frac;
+  bool _free_surface;
+  std::shared_ptr<XolotlInterface> _interface;
+  Real _dt_for_derivative;
+  std::vector<std::vector<std::vector<Real>>> & _old_rate;
+  std::vector<int> _gb_list;
+  Real & _current_time;
+  bool _xolotl_has_run;
 
-	// Variables for restart
-	Real &_current_dt;
-	Real &_previous_time;
-	Real &_n_xenon;
-	std::vector<std::vector<std::vector<std::array<Real, 4> > > > &_local_NE;
-	std::vector<
-			std::vector<
-					std::vector<std::vector<std::pair<xolotl::IdType, Real> > > > > &_conc_vector;
-
+  // Variables for restart
+  Real & _current_dt;
+  Real & _previous_time;
+  Real & _n_xenon;
+  std::vector<std::vector<std::vector<std::array<Real, 4>>>> & _local_NE;
+  std::vector<std::vector<std::vector<std::vector<std::pair<xolotl::IdType, Real>>>>> &
+      _conc_vector;
 };
 
 #endif /* XOLOTLPROBLEM_H */
