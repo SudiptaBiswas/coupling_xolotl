@@ -34,6 +34,7 @@ public:
 	static void registerAll(Factory &f, ActionFactory &af, Syntax &s);
 
 	// For restart capabilities
+	std::shared_ptr<Backup> backup();
 	virtual void preBackup() override;
 	virtual void postRestore(bool for_restart = false) override;
 
