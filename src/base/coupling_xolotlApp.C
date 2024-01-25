@@ -38,7 +38,7 @@ void coupling_xolotlApp::createInterface(FileName paramName) {
 }
 
 void coupling_xolotlApp::registerAll(Factory &f, ActionFactory &af, Syntax &s) {
-	ModulesApp::registerAll(f, af, s);
+	ModulesApp::registerAllObjects<coupling_xolotlApp>(f, af, s);
 	Registry::registerObjectsTo(f, { "coupling_xolotlApp" });
 	Registry::registerActionsTo(af, { "coupling_xolotlApp" });
 
