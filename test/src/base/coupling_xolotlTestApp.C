@@ -36,8 +36,8 @@ void coupling_xolotlTestApp::registerAll(Factory &f, ActionFactory &af,
 }
 
 void coupling_xolotlTestApp::registerApps() {
-	registerApp (coupling_xolotlApp);
-	registerApp (coupling_xolotlTestApp);
+	coupling_xolotlApp::registerApps();
+	registerApp(coupling_xolotlTestApp);
 }
 
 /***************************************************************************************************

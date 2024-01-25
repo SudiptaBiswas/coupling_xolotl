@@ -45,7 +45,8 @@ void coupling_xolotlApp::registerAll(Factory &f, ActionFactory &af, Syntax &s) {
 }
 
 void coupling_xolotlApp::registerApps() {
-	registerApp (coupling_xolotlApp);
+	registerApp(coupling_xolotlApp);
+	ModulesApp::registerApps();
 }
 
 void coupling_xolotlApp::preBackup() {
