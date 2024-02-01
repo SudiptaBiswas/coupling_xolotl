@@ -229,7 +229,7 @@
     variable = etab0
     Fj_names  = 'omegab   omegam'
     hj_names  = 'hb       hm'
-    args = 'etam0 etam1 etam2 etam3 etam4 wv wg'
+    coupled_variables = 'etam0 etam1 etam2 etam3 etam4 wv wg'
     mob_name = L
   [../]
   [./ACb0_int]
@@ -255,7 +255,7 @@
     variable = etam0
     Fj_names  = 'omegab   omegam'
     hj_names  = 'hb       hm'
-    args = 'etab0 etam1 etam2 etam3 etam4 wv wg'
+    coupled_variables = 'etab0 etam1 etam2 etam3 etam4 wv wg'
     mob_name = L
   [../]
   [./ACm0_int]
@@ -281,7 +281,7 @@
     variable = etam1
     Fj_names  = 'omegab   omegam'
     hj_names  = 'hb       hm'
-    args = 'etab0 etam0 etam2 etam3 etam4 wv wg'
+    coupled_variables = 'etab0 etam0 etam2 etam3 etam4 wv wg'
     mob_name = L
   [../]
   [./ACm1_int]
@@ -308,7 +308,7 @@
       variable = etam2
       Fj_names  = 'omegab   omegam'
       hj_names  = 'hb       hm'
-      args = 'etab0 etam0 etam1 etam3 etam4 wv wg'
+      coupled_variables = 'etab0 etam0 etam1 etam3 etam4 wv wg'
       mob_name = L
     [../]
     [./ACm2_int]
@@ -334,7 +334,7 @@
       variable = etam3
       Fj_names  = 'omegab   omegam'
       hj_names  = 'hb                   hm'
-      args = 'etab0 etam0 etam1 etam2 etam4 wv wg'
+      coupled_variables = 'etab0 etam0 etam1 etam2 etam4 wv wg'
       mob_name = L
     [../]
     [./ACm3_int]
@@ -360,7 +360,7 @@
       variable = etam4
       Fj_names  = 'omegab   omegam'
       hj_names  = 'hb                   hm'
-      args = 'etab0 etam0 etam1 etam2 etam3 wv wg'
+      coupled_variables = 'etab0 etam0 etam1 etam2 etam3 wv wg'
       mob_name = L
     [../]
     [./ACm4_int]
@@ -379,13 +379,13 @@
     type = SusceptibilityTimeDerivative
     variable = wv
     f_name = chiv
-    args = '' # in this case chi (the susceptibility) is simply a constant
+    coupled_variables = '' # in this case chi (the susceptibility) is simply a constant
   [../]
   [./Diffusion_v]
     type = MatDiffusion
     variable = wv
     diffusivity = Dchiv
-    args = ''
+    coupled_variables = ''
   [../]
   #[./Source_v]
   #  type = MaskedBodyForce
@@ -405,7 +405,7 @@
     v = etab0
     Fj_names = 'rhovbub rhovmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_v_etam0dot]
     type = CoupledSwitchingTimeDerivative
@@ -413,7 +413,7 @@
     v = etam0
     Fj_names = 'rhovbub rhovmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_v_etam1dot]
     type = CoupledSwitchingTimeDerivative
@@ -421,7 +421,7 @@
     v = etam1
     Fj_names = 'rhovbub rhovmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_v_etam2dot]
     type = CoupledSwitchingTimeDerivative
@@ -429,7 +429,7 @@
     v = etam2
     Fj_names = 'rhovbub rhovmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_v_etam3dot]
     type = CoupledSwitchingTimeDerivative
@@ -437,7 +437,7 @@
     v = etam3
     Fj_names = 'rhovbub rhovmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_v_etam4dot]
     type = CoupledSwitchingTimeDerivative
@@ -445,7 +445,7 @@
     v = etam4
     Fj_names = 'rhovbub rhovmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
 
 #Chemical potential for gas atoms
@@ -453,13 +453,13 @@
     type = SusceptibilityTimeDerivative
     variable = wg
     f_name = chig
-    args = '' # in this case chi (the susceptibility) is simply a constant
+    coupled_variables = '' # in this case chi (the susceptibility) is simply a constant
   [../]
   [./Diffusion_g]
     type = MatDiffusion
     variable = wg
     diffusivity = Dchig
-    args = ''
+    coupled_variables = ''
   [../]
   #[./Source_g]
   #  type = MaskedBodyForce
@@ -479,7 +479,7 @@
     v = etab0
     Fj_names = 'rhogbub rhogmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_g_etam0dot]
     type = CoupledSwitchingTimeDerivative
@@ -487,7 +487,7 @@
     v = etam0
     Fj_names = 'rhogbub rhogmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_g_etam1dot]
     type = CoupledSwitchingTimeDerivative
@@ -495,7 +495,7 @@
     v = etam1
     Fj_names = 'rhogbub rhogmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_g_etam2dot]
     type = CoupledSwitchingTimeDerivative
@@ -503,7 +503,7 @@
     v = etam2
     Fj_names = 'rhogbub rhogmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_g_etam3dot]
     type = CoupledSwitchingTimeDerivative
@@ -511,7 +511,7 @@
     v = etam3
     Fj_names = 'rhogbub rhogmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
   [./coupled_g_etam4dot]
     type = CoupledSwitchingTimeDerivative
@@ -519,7 +519,7 @@
     v = etam4
     Fj_names = 'rhogbub rhogmatrix'
     hj_names = 'hb      hm'
-    args = 'etab0 etam0 etam1 etam2 etam3 etam4'
+    coupled_variables = 'etab0 etam0 etam1 etam2 etam3 etam4'
   [../]
 
 []
@@ -550,10 +550,10 @@
 # Chemical contribution to grand potential of bubble
   [./omegab]
     type = DerivativeParsedMaterial
-    args = 'wv wg time'
-    f_name = omegab
+    coupled_variables = 'wv wg time'
+    property_name = omegab
     material_property_names = 'Va kvbub cvbubeq kgbub cgbubeq'
-    function = 'if(time < 0, 0, -0.5*wv^2/Va^2/kvbub-wv/Va*cvbubeq-0.5*wg^2/Va^2/kgbub-wg/Va*cgbubeq)'
+    expression = 'if(time < 0, 0, -0.5*wv^2/Va^2/kvbub-wv/Va*cvbubeq-0.5*wg^2/Va^2/kgbub-wg/Va*cgbubeq)'
     derivative_order = 2
     #outputs = exodus
   [../]
@@ -561,10 +561,10 @@
 # Chemical contribution to grand potential of matrix
   [./omegam]
     type = DerivativeParsedMaterial
-    args = 'wv wg time'
-    f_name = omegam
+    coupled_variables = 'wv wg time'
+    property_name = omegam
     material_property_names = 'Va kvmatrix cvmatrixeq kgmatrix cgmatrixeq'
-    function = 'if(time < 0, 0, -0.5*wv^2/Va^2/kvmatrix-wv/Va*cvmatrixeq-0.5*wg^2/Va^2/kgmatrix-wg/Va*cgmatrixeq)'
+    expression = 'if(time < 0, 0, -0.5*wv^2/Va^2/kvmatrix-wv/Va*cvmatrixeq-0.5*wg^2/Va^2/kgmatrix-wg/Va*cgmatrixeq)'
     derivative_order = 2
     #outputs = exodus
   [../]
@@ -572,37 +572,37 @@
 # Densities
   [./rhovbub]
     type = DerivativeParsedMaterial
-    args = 'wv'
-    f_name = rhovbub
+    coupled_variables = 'wv'
+    property_name = rhovbub
     material_property_names = 'Va kvbub cvbubeq'
-    function = 'wv/Va^2/kvbub + cvbubeq/Va'
+    expression = 'wv/Va^2/kvbub + cvbubeq/Va'
     derivative_order = 2
     #outputs = exodus
   [../]
   [./rhovmatrix]
     type = DerivativeParsedMaterial
-    args = 'wv'
-    f_name = rhovmatrix
+    coupled_variables = 'wv'
+    property_name = rhovmatrix
     material_property_names = 'Va kvmatrix cvmatrixeq'
-    function = 'wv/Va^2/kvmatrix + cvmatrixeq/Va'
+    expression = 'wv/Va^2/kvmatrix + cvmatrixeq/Va'
     derivative_order = 2
     #outputs = exodus
   [../]
   [./rhogbub]
     type = DerivativeParsedMaterial
-    args = 'wg'
-    f_name = rhogbub
+    coupled_variables = 'wg'
+    property_name = rhogbub
     material_property_names = 'Va kgbub cgbubeq'
-    function = 'wg/Va^2/kgbub + cgbubeq/Va'
+    expression = 'wg/Va^2/kgbub + cgbubeq/Va'
     derivative_order = 2
     #outputs = exodus
   [../]
   [./rhogmatrix]
     type = DerivativeParsedMaterial
-    args = 'wg'
-    f_name = rhogmatrix
+    coupled_variables = 'wg'
+    property_name = rhogmatrix
     material_property_names = 'Va kgmatrix cgmatrixeq'
-    function = 'wg/Va^2/kgmatrix + cgmatrixeq/Va'
+    expression = 'wg/Va^2/kgmatrix + cgmatrixeq/Va'
     derivative_order = 2
     #outputs = exodus
   [../]
@@ -616,135 +616,135 @@
   [../]
   [./cvmatrixeq]
     type = ParsedMaterial
-    f_name = cvmatrixeq
+    property_name = cvmatrixeq
     material_property_names = 'T'
     constant_names        = 'kB           Efv'  # in eV/atom
     constant_expressions  = '8.6173324e-5 3.0'
-    function = 'exp(-Efv/(kB*T))'
+    expression = 'exp(-Efv/(kB*T))'
   [../]
   [./cgmatrixeq]
     type = ParsedMaterial
-    f_name = cgmatrixeq
+    property_name = cgmatrixeq
     material_property_names = 'T'
     constant_names        = 'kB           Efg'  # in eV/atom
     constant_expressions  = '8.6173324e-5 3.0'
-    function = 'exp(-Efg/(kB*T))'
+    expression = 'exp(-Efg/(kB*T))'
   [../]
   [./kvmatrix_parabola]
     type = ParsedMaterial
-    f_name = kvmatrix
-    args = 'time'
-    #function = '3.00625e3' # in eV/nm^3
-    #function = '7.516' # in eV/nm^3
-    function = '7.516e-2' # in eV/nm^3, decreased
+    property_name = kvmatrix
+    coupled_variables = 'time'
+    #expression = '3.00625e3' # in eV/nm^3
+    #expression = '7.516' # in eV/nm^3
+    expression = '7.516e-2' # in eV/nm^3, decreased
     #outputs = exodus
   [../]
   [./kgmatrix_parabola]
     type = ParsedMaterial
-    f_name = kgmatrix
+    property_name = kgmatrix
     material_property_names = 'kvmatrix'
-    function = 'kvmatrix'
+    expression = 'kvmatrix'
   [../]
   [./kgbub_parabola]
     type = ParsedMaterial
-    f_name = kgbub
-    #function = '0.5625e3' # in eV/nm^3
-    #function = '1.406' # in eV/nm^3
-    function = '1.406e-2' # in eV/nm^3, decreased
+    property_name = kgbub
+    #expression = '0.5625e3' # in eV/nm^3
+    #expression = '1.406' # in eV/nm^3
+    expression = '1.406e-2' # in eV/nm^3, decreased
     #outputs = exodus
   [../]
   [./kvbub_parabola]
     type = ParsedMaterial
-    f_name = kvbub
+    property_name = kvbub
     material_property_names = 'kgbub'
-    function = 'kgbub'
+    expression = 'kgbub'
   [../]
   [./Mobility_v]
     type = DerivativeParsedMaterial
-    f_name = Dchiv
+    property_name = Dchiv
     material_property_names = 'Db chiv'
-    args = 'time'
-    function = 'if(time < 0, 100*Db*chiv, Db*chiv)'
-    #function = 'Db*chiv'
+    coupled_variables = 'time'
+    expression = 'if(time < 0, 100*Db*chiv, Db*chiv)'
+    #expression = 'Db*chiv'
     derivative_order = 2
     # outputs = exodus
   [../]
   [./Mobility_g]
     type = DerivativeParsedMaterial
-    f_name = Dchig
+    property_name = Dchig
     material_property_names = 'Dm chig'
-    args = 'time'
-    function = 'if(time < 0, 100*Dm*chig, Dm*chig)'
-    #function = 'Dm*chig'
+    coupled_variables = 'time'
+    expression = 'if(time < 0, 100*Dm*chig, Dm*chig)'
+    #expression = 'Dm*chig'
     derivative_order = 2
     # outputs = exodus
   [../]
   [./chiv]
     type = DerivativeParsedMaterial
-    f_name = chiv
+    property_name = chiv
     material_property_names = 'Va hb kvbub hm kvmatrix '
-    function = '(hm/kvmatrix + hb/kvbub) / Va^2'
+    expression = '(hm/kvmatrix + hb/kvbub) / Va^2'
     derivative_order = 2
     # outputs = exodus
   [../]
   [./chig]
     type = DerivativeParsedMaterial
-    f_name = chig
+    property_name = chig
     material_property_names = 'Va hb kgbub hm kgmatrix '
-    function = '(hm/kgmatrix + hb/kgbub) / Va^2'
+    expression = '(hm/kgmatrix + hb/kgbub) / Va^2'
     derivative_order = 2
     # outputs = exodus
   [../]
 
   [./XeRate]
     type = ParsedMaterial
-    f_name = XeRate
+    property_name = XeRate
     material_property_names = 'hm'
-    args = 'time XolotlXeRate'  # XolotlXeRate is in Xe/(nm^3 * s) & Va is in Xe/nm^3
-    # function = 'if(time < 0, 0, XolotlXeRate * hm)'
-    function = 'if(time < 0, 0, XolotlXeRate)'
+    coupled_variables = 'time XolotlXeRate'  # XolotlXeRate is in Xe/(nm^3 * s) & Va is in Xe/nm^3
+    # expression = 'if(time < 0, 0, XolotlXeRate * hm)'
+    expression = 'if(time < 0, 0, XolotlXeRate)'
     outputs = exodus
   [../]
 
   [./VacRate]
     type = ParsedMaterial
-    f_name = VacRate
+    property_name = VacRate
     material_property_names = 'XeRate YXe'
-    function = 'XeRate / YXe'
+    expression = 'XeRate / YXe'
     outputs = exodus
   [../]
 
   [./XeRate_ref]
     type = ParsedMaterial
-    f_name = XeRate0
+    property_name = XeRate0
     material_property_names = 'Va hm'
     constant_names = 's0'
     constant_expressions = '2.35e-9'  # in atoms/(nm^3 * s)
-    args = 'time'
-    function = 'if(time < 0, 0, s0 * hm)'
+    coupled_variables = 'time'
+    expression = 'if(time < 0, 0, s0 * hm)'
     outputs = exodus
   [../]
   [./VacRate_ref]
     type = ParsedMaterial
-    f_name = VacRate0
+    property_name = VacRate0
     material_property_names = 'YXe XeRate0'
-    args = 'time'
-    function = 'if(time < 0, 0, XeRate0 / YXe)'
+    coupled_variables = 'time'
+    expression = 'if(time < 0, 0, XeRate0 / YXe)'
     outputs = exodus
   [../]
 
   [./cg]
     type = ParsedMaterial
-    f_name = cg_from_rhog
+    property_name = cg_from_rhog
     material_property_names = 'Va rhogbub rhogmatrix hm hb'
-    function = 'hb*Va*rhogbub + hm*Va*rhogmatrix'
+    expression = 'hb*Va*rhogbub + hm*Va*rhogmatrix'
     outputs = exodus
   [../]
   [./cv]
     type = ParsedMaterial
-    f_name = cv_from_rhov
+    property_name = cv_from_rhov
     material_property_names = 'Va rhovbub rhovmatrix hm hb'
-    function = 'hb*Va*rhovbub + hm*Va*rhovmatrix'
+    expression = 'hb*Va*rhovbub + hm*Va*rhovmatrix'
     outputs = exodus
   [../]
 []
@@ -856,33 +856,29 @@
 
 [Transfers]
   [./fromsubrate]
-    type = MultiAppMeshFunctionTransfer
-    direction = from_multiapp
-    multi_app = sub_app
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    from_multi_app = sub_app
     source_variable = Auxv
     variable = XolotlXeRate
     execute_on = SAME_AS_MULTIAPP
   [../]
   [./fromsubmono]
-    type = MultiAppMeshFunctionTransfer
-    direction = from_multiapp
-    multi_app = sub_app
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    from_multi_app = sub_app
     source_variable = AuxMono
     variable = XolotlXeMono
     execute_on = SAME_AS_MULTIAPP
   [../]
   [./fromsubfrac]
-    type = MultiAppMeshFunctionTransfer
-    direction = from_multiapp
-    multi_app = sub_app
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    from_multi_app = sub_app
     source_variable = AuxFrac
     variable = XolotlVolumeFraction
     execute_on = SAME_AS_MULTIAPP
   [../]
   [./tosub]
-    type = MultiAppMeshFunctionTransfer
-    direction = to_multiapp
-    multi_app = sub_app
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    to_multi_app = sub_app
     source_variable = bnds
     variable = AuxGB
     execute_on = SAME_AS_MULTIAPP

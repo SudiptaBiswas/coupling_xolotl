@@ -114,7 +114,7 @@ void XolotlProblem::externalSolve() {
 	}
 }
 
-bool XolotlProblem::converged() {
+bool XolotlProblem::converged(const unsigned int /*nl_sys_num*/) {
 	bool conv = _interface->getConvergenceStatus();
 	return conv;
 }

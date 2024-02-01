@@ -9,8 +9,7 @@
 InputParameters coupling_xolotlApp::validParams() {
 	InputParameters params = MooseApp::validParams();
 
-	// By default, use preset BCs
-	params.set<bool>("use_legacy_dirichlet_bc") = false;
+	// Do not use legacy material output, i.e., output properties on INITIAL as well as TIMESTEP_END
 	params.set<bool>("use_legacy_material_output") = false;
 
 	return params;
@@ -38,7 +37,7 @@ void coupling_xolotlApp::createInterface(FileName paramName) {
 }
 
 void coupling_xolotlApp::registerAll(Factory &f, ActionFactory &af, Syntax &s) {
-	ModulesApp::registerAll(f, af, s);
+	ModulesApp::registerAllObjects<coupling_xolotlApp>(f, af, s);
 	Registry::registerObjectsTo(f, { "coupling_xolotlApp" });
 	Registry::registerActionsTo(af, { "coupling_xolotlApp" });
 
@@ -46,7 +45,8 @@ void coupling_xolotlApp::registerAll(Factory &f, ActionFactory &af, Syntax &s) {
 }
 
 void coupling_xolotlApp::registerApps() {
-	registerApp (coupling_xolotlApp);
+	registerApp(coupling_xolotlApp);
+	ModulesApp::registerApps();
 }
 
 void coupling_xolotlApp::preBackup() {

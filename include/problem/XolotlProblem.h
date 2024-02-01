@@ -28,7 +28,7 @@ public:
 	virtual void externalSolve() override;
 	virtual void syncSolutions(Direction /*direction*/) override;
 
-	virtual bool converged() override;
+	virtual bool converged(const unsigned int /*nl_sys_num*/) override;
 
 	// Methods for restart
 	void saveState();
