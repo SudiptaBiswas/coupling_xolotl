@@ -14,14 +14,8 @@ coupling_xolotlApp::validParams()
 {
   InputParameters params = MooseApp::validParams();
 
-<<<<<<< HEAD
   // Do not use legacy material output, i.e., output properties on INITIAL as well as TIMESTEP_END
   params.set<bool>("use_legacy_material_output") = false;
-=======
-  // By default, use preset BCs
-  params.set<bool>("use_legacy_dirichlet_bc") = false;
-  params.set<bool>("use_legacy_material_output") = false;
->>>>>>> d2b46a8 (HBS input files and parameters)
 
   return params;
 }
@@ -48,17 +42,17 @@ coupling_xolotlApp::createInterface(FileName paramName)
   _is_xolotl_app = true;
 }
 
-void
-coupling_xolotlApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
-{
-  ModulesApp::registerAll(f, af, s);
-  Registry::registerObjectsTo(f, {"coupling_xolotlApp"});
-  Registry::registerActionsTo(af, {"coupling_xolotlApp"});
-#ifdef MARMOT_ENABLED
-  MarmotApp::registerAll(f, af, s);
-#endif
-  /* register custom execute flags, action syntax, etc. here */
-}
+// void
+// coupling_xolotlApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
+// {
+//   ModulesApp::registerAll(f, af, s);
+//   Registry::registerObjectsTo(f, {"coupling_xolotlApp"});
+//   Registry::registerActionsTo(af, {"coupling_xolotlApp"});
+// #ifdef MARMOT_ENABLED
+//   MarmotApp::registerAll(f, af, s);
+// #endif
+//   /* register custom execute flags, action syntax, etc. here */
+// }
 
 void
 coupling_xolotlApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
@@ -66,7 +60,9 @@ coupling_xolotlApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
   ModulesApp::registerAllObjects<coupling_xolotlApp>(f, af, s);
   Registry::registerObjectsTo(f, {"coupling_xolotlApp"});
   Registry::registerActionsTo(af, {"coupling_xolotlApp"});
-
+#ifdef MARMOT_ENABLED
+  MarmotApp::registerAll(f, af, s);
+#endif
   /* register custom execute flags, action syntax, etc. here */
 }
 
