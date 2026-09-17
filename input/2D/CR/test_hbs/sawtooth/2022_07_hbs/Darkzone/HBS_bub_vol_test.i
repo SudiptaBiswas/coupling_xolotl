@@ -1,4 +1,4 @@
-# This is an input file for getting the grain statistics from phase field simulations
+# This is an input file for the HBS with explicit nucleation and dislocation energy only.
 [Mesh]
   # file = 2020_10_22_HBS_bub_gas_Gr100_recover_exodus.e
   type = GeneratedMesh
@@ -1057,13 +1057,7 @@
   []
   [sol]
     type = SolutionUserObject
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_b150_exodus.e-s6740
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_b200_exodus.e-s7356
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_exodus.e-s5762
-    mesh = 2022_10_10_HBS_bub_gas_nuc_T1100_test_exodus.e-s400
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_T1100_exodus.e-s1000
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_T1000_Dv_exodus.e-s1500
-    # timestep = latest
+    mesh = 2024_09_11_darkzone_subgrain_nuc3_T1000_scaling2_refine_exodus.e-s020
   []
 []
 

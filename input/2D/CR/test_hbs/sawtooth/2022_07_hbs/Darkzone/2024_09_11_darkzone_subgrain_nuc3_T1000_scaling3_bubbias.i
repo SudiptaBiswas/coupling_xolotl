@@ -1,114 +1,28 @@
-# This is an input file for getting the grain statistics from phase field simulations
+
+# input file for bubble groeth and pressure build up in HbS structure
+# For model parameterization, time scale = 1 sec, length scale  = 1 nm, energy density scale = 1 eV/nm^3, int_width = 10 nm
+# domain size is scaled for reducing computational cost
 [Mesh]
-  # file = 2020_10_22_HBS_bub_gas_Gr100_recover_exodus.e
   type = GeneratedMesh
   dim = 2
-  nx = 125
-  ny = 125
+  nx = 25
+  ny = 25
   xmin = 0
-  xmax = 1250 #25000 #50000
+  xmax = 1250
   ymin = 0
-  ymax = 1250 #25000 #50000
-  uniform_refine = 2
-[]
-
-[Functions]
-  [etab]
-    type = SolutionFunction
-    solution = sol
-    from_variable = etab
-  []
-  [eta0]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta0
-  []
-  [eta1]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta1
-  []
-  [eta2]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta2
-  []
-  [eta3]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta3
-  []
-  [eta4]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta4
-  []
-  [eta5]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta5
-  []
-  [eta6]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta6
-  []
-  [eta7]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta7
-  []
-
-  [eta8]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta8
-  []
-  [eta9]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta9
-  []
-  [eta10]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta10
-  []
-  [eta11]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta11
-  []
-  [eta12]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta12
-  []
-  [eta13]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta13
-  []
-  [eta14]
-    type = SolutionFunction
-    solution = sol
-    from_variable = eta14
-  []
-  [w]
-    type = SolutionFunction
-    solution = sol
-    from_variable = w
-  []
-  [wg]
-    type = SolutionFunction
-    solution = sol
-    from_variable = wg
-  []
+  ymax = 1250
+  uniform_refine = 1
 []
 
 [GlobalParams]
-  op_num = 15
+  op_num = 16
+  # grain_num = 15
   var_name_base = eta
+  numbub = 1
+  bubspac = 600
+  radius = 100.0
+  int_width = 20.0
+  polycrystal_ic_uo = voronoi
 []
 
 [Variables]
@@ -123,98 +37,52 @@
 []
 
 [ICs]
-  [etab]
-    type = FunctionIC
+  [PolycrystalICs]
+    [PolycrystalVoronoiVoidIC]
+      invalue = 1.0
+      outvalue = 0.0
+      op_num = 15
+      rand_seed = 18765
+    []
+  []
+  [bubble_IC]
     variable = etab
-    function = etab
+    type = PolycrystalVoronoiVoidIC
+    structure_type = voids
+    rand_seed = 18765
+    invalue = 1.0
+    outvalue = 0.0
   []
-
-  [eta0]
-    type = FunctionIC
-    variable = eta0
-    function = eta0
-  []
-  [eta1]
-    type = FunctionIC
-    variable = eta1
-    function = eta1
-  []
-
-  [eta2]
-    type = FunctionIC
-    variable = eta2
-    function = eta2
-  []
-  [eta3]
-    type = FunctionIC
-    variable = eta3
-    function = eta3
-  []
-  [eta4]
-    type = FunctionIC
-    variable = eta4
-    function = eta4
-  []
-  [eta5]
-    type = FunctionIC
-    variable = eta5
-    function = eta5
-  []
-  [eta6]
-    type = FunctionIC
-    variable = eta6
-    function = eta6
-  []
-  [eta7]
-    type = FunctionIC
-    variable = eta7
-    function = eta7
-  []
-  [eta8]
-    type = FunctionIC
-    variable = eta8
-    function = eta8
-  []
-  [eta9]
-    type = FunctionIC
-    variable = eta9
-    function = eta9
-  []
-  [eta10]
-    type = FunctionIC
-    variable = eta10
-    function = eta10
-  []
-  [eta11]
-    type = FunctionIC
-    variable = eta11
-    function = eta11
-  []
-  [eta12]
-    type = FunctionIC
-    variable = eta12
-    function = eta12
-  []
-  [eta13]
-    type = FunctionIC
-    variable = eta13
-    function = eta13
-  []
-  [eta14]
-    type = FunctionIC
-    variable = eta14
-    function = eta14
-  []
-
-  [w]
-    type = FunctionIC
+  [IC_wv]
+    type = ConstantIC
     variable = w
-    function = w
+    value = 0.02237
   []
-  [wg]
-    type = FunctionIC
+  [IC_wg]
+    type = ConstantIC
     variable = wg
-    function = wg
+    value = -1.5189
+  []
+  # [IC_w]
+  #   variable = w
+  #   type = PolycrystalVoronoiVoidIC
+  #   structure_type = voids
+  #   rand_seed = 18765
+  #   invalue = 0.0 #this corresponds to concentration 0.85
+  #   outvalue = 0.0
+  # []
+  # [IC_wg]
+  #   variable = wg
+  #   type = PolycrystalVoronoiVoidIC
+  #   structure_type = voids
+  #   rand_seed = 18765
+  #   invalue = 0.0 #concentration 0.15
+  #   outvalue = 0.0
+  # []
+  [bnds]
+    type = BndsCalcIC
+    variable = bnds
+    op_num = 15
   []
 []
 
@@ -222,8 +90,6 @@
   [bnds]
     order = FIRST
     family = LAGRANGE
-    # initial_from_file_var = bnds
-    # initial_from_file_timestep = LATEST
   []
   [unique_grains]
     order = CONSTANT
@@ -237,19 +103,43 @@
     order = CONSTANT
     family = MONOMIAL
   []
+  # [./XolotlXeRate]
+  #   order = FIRST
+  #   family = LAGRANGE
+  # [../]
+  # [./XolotlXeMono]
+  #   order = FIRST
+  #   family = LAGRANGE
+  # [../]
+  # [./XolotlVolumeFraction]
+  #   order = FIRST
+  #   family = LAGRANGE
+  # [../]
+
+  [./time]
+  [../]
+  [./cg]
+    order = FIRST
+    family = MONOMIAL
+  [../]
+  [./cv]
+    order = FIRST
+    family = MONOMIAL
+  [../]
+  [proc_id]
+    order = FIRST
+    family = LAGRANGE
+  []
 []
 
 [Kernels]
+  #order parameter etab for bubbles
   [ACb_bulk]
     type = ACGrGrMulti
     variable = etab
     v = 'eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
     gamma_names = 'gmb  gmb  gmb  gmb   gmb gmb  gmb  gmb  gmb  gmb  gmb    gmb   gmb  gmb   gmb '
-  []
-  [ACb_bulk1]
-    type = AllenCahn
-    variable = etab
-    f_name = fetab0
+    mob_name = Lv
   []
   [ACb_sw]
     type = ACSwitching
@@ -257,17 +147,19 @@
     Fj_names = 'omegab  omegam'
     hj_names = 'hb      hm'
     args = 'w wg eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    mob_name = Lv
   []
   [ACb_int]
     type = ACInterface
     variable = etab
     kappa_name = kappa
+    mob_name = Lv
   []
   [eb_dot]
     type = TimeDerivative
     variable = etab
   []
-  # Order parameter eta_m0 for matrix grain 0
+  # Order parameter eta0 for matrix grain 0
   [ACm0_bulk]
     type = ACGrGrMulti
     variable = eta0
@@ -290,7 +182,14 @@
     type = TimeDerivative
     variable = eta0
   []
-  # Order parameter eta_m1 for matrix grain 1
+  [em0_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta0
+    grain_tracker = grain_tracker
+    op_index = 0
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+  []
+  # Order parameter eta1 for matrix grain 1
   [ACm1_bulk]
     type = ACGrGrMulti
     variable = eta1
@@ -313,7 +212,14 @@
     type = TimeDerivative
     variable = eta1
   []
-  # Order parameter eta_m2 for matrix grain 2
+  [em1_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta1
+    grain_tracker = grain_tracker
+    op_index = 1
+    v = 'etab eta0 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+  []
+  # Order parameter eta2 for matrix grain 2
   [ACm2_bulk]
     type = ACGrGrMulti
     variable = eta2
@@ -336,7 +242,14 @@
     type = TimeDerivative
     variable = eta2
   []
-  # Order parameter eta_m3 for matrix grain 3
+  [em2_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta2
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta0 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    op_index = 2
+  []
+  # Order parameter eta3 for matrix grain 3
   [ACm3_bulk]
     type = ACGrGrMulti
     variable = eta3
@@ -359,6 +272,14 @@
     type = TimeDerivative
     variable = eta3
   []
+  [em3_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta3
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta0 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    op_index = 3
+  []
+  # Order parameter eta4 for matrix grain 4
   [ACm4_bulk]
     type = ACGrGrMulti
     variable = eta4
@@ -381,6 +302,14 @@
     type = TimeDerivative
     variable = eta4
   []
+  [em4_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta4
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta0 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    op_index = 4
+  []
+  # Order parameter eta5 for matrix grain 5
   [ACm5_bulk]
     type = ACGrGrMulti
     variable = eta5
@@ -403,6 +332,14 @@
     type = TimeDerivative
     variable = eta5
   []
+  [em5_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta5
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta0 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    op_index = 5
+  []
+  # Order parameter eta6 for matrix grain 6
   [ACm6_bulk]
     type = ACGrGrMulti
     variable = eta6
@@ -425,6 +362,14 @@
     type = TimeDerivative
     variable = eta6
   []
+  [em6_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta6
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta0 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    op_index = 6
+  []
+  # Order parameter eta7 for matrix grain 7
   [ACm7_bulk]
     type = ACGrGrMulti
     variable = eta7
@@ -447,6 +392,14 @@
     type = TimeDerivative
     variable = eta7
   []
+  [em7_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta7
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta0 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    op_index = 7
+  []
+  # Order parameter eta8 for matrix grain 8
   [ACm8_bulk]
     type = ACGrGrMulti
     variable = eta8
@@ -469,6 +422,14 @@
     type = TimeDerivative
     variable = eta8
   []
+  [em8_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta8
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta0 eta9 eta10 eta11 eta12 eta13 eta14'
+    op_index = 8
+  []
+  # Order parameter eta9 for matrix grain 9
   [ACm9_bulk]
     type = ACGrGrMulti
     variable = eta9
@@ -491,6 +452,14 @@
     type = TimeDerivative
     variable = eta9
   []
+  [em9_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta9
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta0 eta10 eta11 eta12 eta13 eta14'
+    op_index = 9
+  []
+  # Order parameter eta10 for matrix grain 10
   [ACm10_bulk]
     type = ACGrGrMulti
     variable = eta10
@@ -513,6 +482,14 @@
     type = TimeDerivative
     variable = eta10
   []
+  [em10_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta10
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta0 eta11 eta12 eta13 eta14'
+    op_index = 10
+  []
+  # Order parameter eta11 for matrix grain 11
   [ACm11_bulk]
     type = ACGrGrMulti
     variable = eta11
@@ -535,6 +512,14 @@
     type = TimeDerivative
     variable = eta11
   []
+  [em11_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta11
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta0 eta12 eta13 eta14'
+    op_index = 11
+  []
+  # Order parameter eta12 for matrix grain 12
   [ACm12_bulk]
     type = ACGrGrMulti
     variable = eta12
@@ -557,6 +542,14 @@
     type = TimeDerivative
     variable = eta12
   []
+  [em12_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta12
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta0 eta13 eta14'
+    op_index = 12
+  []
+  # Order parameter eta13 for matrix grain 13
   [ACm13_bulk]
     type = ACGrGrMulti
     variable = eta13
@@ -579,6 +572,14 @@
     type = TimeDerivative
     variable = eta13
   []
+  [em13_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta13
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta0 eta14'
+    op_index = 13
+  []
+  # Order parameter eta14 for matrix grain 14
   [ACm14_bulk]
     type = ACGrGrMulti
     variable = eta14
@@ -601,23 +602,39 @@
     type = TimeDerivative
     variable = eta14
   []
-  #Chemical potential for vacancies
+  [em14_dd]
+    type = ACPolycrystalDislocationEnergy
+    variable = eta14
+    grain_tracker = grain_tracker
+    v = 'etab eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta0'
+    op_index = 14
+  []
+
+  #Chemical potential for gas atoms
   [wg_dot]
     type = SusceptibilityTimeDerivative
     variable = wg
-    f_name = chi
+    f_name = chig
+    args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
   [Diffusion_wg]
     type = MatDiffusion
     variable = wg
-    diffusivity = Dchi
+    diffusivity = Dgchi
+    args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+  []
+  [source_wg]
+    type = MaskedBodyForce
+    variable = wg
+    value = 1.0 #fission rate * Xe yield = 1.09e19*0.2156 fission/m^3/s
+    mask = XeRate0
     args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
   [coupled_wg_etabdot]
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = etab
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -625,7 +642,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta0
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -633,7 +650,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta1
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -641,7 +658,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta2
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -649,7 +666,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta3
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -657,7 +674,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta4
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -665,7 +682,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta5
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -673,7 +690,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta6
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -681,7 +698,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta7
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -689,7 +706,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta8
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -697,7 +714,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta9
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -705,7 +722,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta10
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -713,7 +730,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta11
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -721,7 +738,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta12
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -729,7 +746,7 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta13
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
@@ -737,22 +754,40 @@
     type = CoupledSwitchingTimeDerivative
     variable = wg
     v = eta14
-    Fj_names = 'rhob   rhom'
+    Fj_names = 'rhogb   rhogm'
     hj_names = 'hb      hm'
     args = 'w etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
-
   [wv_dot]
     type = SusceptibilityTimeDerivative
     variable = w
-    f_name = chi
+    f_name = chiv
+    args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
   [Diffusion_wv]
     type = MatDiffusion
     variable = w
-    diffusivity = Dchi
+    diffusivity = Dvchi
     args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
+  [source_wv]
+    type = MaskedBodyForce
+    variable = w
+    value = 10.0# 10 times of the gas source
+    mask = XeRate0
+    args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+  []
+  # [sink_wv]
+  #   type = GrandPotentialSink
+  #   variable = w
+  #   value = 1.0
+  #   sink_strength = 1.9223e-7 # sv*Va/cv0/Dv, obtained equating the residuals for MaskedBodyForce for w and GrandPotentialSink kernels
+  #   rho = rho
+  #   rho_s = 1
+  #   D = 1
+  #   mask = hm
+  #   args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+  # []
   [coupled_w_etabdot]
     type = CoupledSwitchingTimeDerivative
     variable = w
@@ -881,6 +916,16 @@
     hj_names = 'hb      hm'
     args = 'wg etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
   []
+  [nucleation]
+    type = DiscreteNucleationForce
+    variable = eta15
+    map = map
+    nucleus_value = 1
+  []
+  [reaction]
+    type = Reaction
+    variable = eta15
+  []
 []
 
 [AuxKernels]
@@ -888,7 +933,7 @@
     type = BndsCalcAux
     variable = bnds
     op_num = 15
-    execute_on = 'initial timestep_end'
+    execute_on = 'timestep_end'
   []
   [unique_grains_calc]
     type = FeatureFloodCountAux
@@ -911,50 +956,83 @@
     field_display = HALOS
     execute_on = 'initial timestep_end'
   []
+  [./time]
+    type = FunctionAux
+    variable = time
+    function = 't'
+  [../]
+  [./cg]
+    type = MaterialRealAux
+    variable = cg
+    property = cg_mat
+  [../]
+  [./cv]
+    type = MaterialRealAux
+    variable = cv
+    property = cv_mat
+  [../]
+  [./proc_id]
+    type = ProcessorIDAux
+    variable = proc_id
+  [../]
 []
 
 [Materials]
-  [fetab0]
-    type = DerivativeParsedMaterial
-    f_name = fetab0
-    args = 'etab'
-    function = '(1-etab)^4/4-(1-etab)^2/2'
-    derivative_order = 2
-  []
   [hm]
     type = SwitchingFunctionMultiPhaseMaterial
     h_name = hm
     all_etas = 'eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14 etab'
     phase_etas = 'eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    outputs = exodus
+    output_properties = 'hm'
   []
   [hb]
     type = SwitchingFunctionMultiPhaseMaterial
     h_name = hb
     all_etas = 'eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14 etab'
     phase_etas = 'etab'
+    outputs = exodus
+    output_properties = 'hb'
   []
 
   [omegab]
     type = DerivativeParsedMaterial
     f_name = omegab
     args = 'w wg'
-    material_property_names = 'Va kb cb_eq cgb_eq f0'
-    function = '-0.5*w^2/Va^2/kb - w/Va*cb_eq - 0.5*wg^2/Va^2/kb - wg/Va*cgb_eq + f0'
+    material_property_names = 'Va kb kgb cb_eq cgb_eq f0'
+    function = '-0.5*w^2/Va^2/kb - w/Va*cb_eq - 0.5*wg^2/Va^2/kgb - wg/Va*cgb_eq + f0'
+    derivative_order = 2
+    outputs = exodus
+    output_properties = 'omegab'
   []
   [omegam]
     type = DerivativeParsedMaterial
     f_name = omegam
     args = 'w wg'
-    material_property_names = 'Va km cm_eq'
-    function = '-0.5*w^2/Va^2/km - w/Va*cm_eq -0.5*wg^2/Va^2/km - wg/Va*cm_eq'
+    material_property_names = 'Va kmv kmg cm_eq'
+    function = '-0.5*w^2/Va^2/kmv - w/Va*cm_eq -0.5*wg^2/Va^2/kmg - wg/Va*cm_eq'
+    derivative_order = 2
+    outputs = exodus
+    output_properties = 'omegam'
   []
 
-  [chi]
+  [chiv]
     type = DerivativeParsedMaterial
-    f_name = chi
+    f_name = chiv
     args = 'w'
-    material_property_names = 'Va hb hm kb km'
-    function = '(hm/km + hb/kb)/Va^2'
+    material_property_names = 'Va hb hm kb kmv'
+    function = '(hm/kmv + hb/kb)/Va^2'
+    derivative_order = 2
+    outputs = exodus
+  []
+  [chig]
+    type = DerivativeParsedMaterial
+    f_name = chig
+    args = 'wg'
+    material_property_names = 'Va hb hm kgb kmg'
+    function = '(hm/kmg + hb/kgb)/Va^2'
+    derivative_order = 2
+    outputs = exodus
   []
 
   [rhob]
@@ -964,70 +1042,147 @@
     material_property_names = 'Va kb cb_eq'
     function = 'w/Va^2/kb + cb_eq/Va'
     derivative_order = 1
+    outputs = exodus
+    output_properties = 'rhob'
   []
   [rhom]
     type = DerivativeParsedMaterial
     f_name = rhom
     args = 'w'
-    material_property_names = 'Va km cm_eq'
-    function = 'w/Va^2/km + cm_eq/Va'
+    material_property_names = 'Va kmv cm_eq'
+    function = 'w/Va^2/kmv + cm_eq/Va'
     derivative_order = 1
+    output_properties = 'rhom'
+    outputs = exodus
   []
   [rhogb]
     type = DerivativeParsedMaterial
     f_name = rhogb
     args = 'wg'
-    material_property_names = 'Va kb cgb_eq'
-    function = 'wg/Va^2/kb + cgb_eq/Va'
+    material_property_names = 'Va kgb cgb_eq'
+    function = 'wg/Va^2/kgb + cgb_eq/Va'
     derivative_order = 1
+    outputs = exodus
+    output_properties = 'rhogb'
   []
   [rhogm]
     type = DerivativeParsedMaterial
     f_name = rhogm
     args = 'wg'
-    material_property_names = 'Va km cm_eq'
-    function = 'wg/Va^2/km + cm_eq/Va'
+    material_property_names = 'Va kmg cm_eq'
+    function = 'wg/Va^2/kmg + cm_eq/Va'
     derivative_order = 1
+    output_properties = 'rhogm'
+    outputs = exodus
   []
   [rhov]
     type = ParsedMaterial
     f_name = rho
     material_property_names = 'rhom hm rhob hb'
     function = '(hm*rhom + hb*rhob)'
+    outputs = exodus
   []
   [rhog]
     type = ParsedMaterial
     f_name = rhog
     material_property_names = 'rhogm hm rhogb hb'
     function = '(hm*rhogm + hb*rhogb)'
+    outputs = exodus
   []
-  [cv]
+  [cv_mat]
     type = ParsedMaterial
-    f_name = cv
+    f_name = cv_mat
     material_property_names = 'rhom hm rhob hb Va'
     function = 'Va*(hm*rhom + hb*rhob)'
+    outputs = exodus
   []
-  [cg]
+  [cg_mat]
     type = ParsedMaterial
-    f_name = cg
+    f_name = cg_mat
     material_property_names = 'rhogm hm rhogb hb Va'
     function = 'Va*(hm*rhogm + hb*rhogb)'
+    outputs = exodus
   []
+  # [Diff_v]
+  #   type = PolycrystalDiffusivity
+  #   c = etab
+  #   v = 'eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+  #   diffusivity = Dv
+  #   Dbulk = 16.65271 # this value is obatined from Matzke 1987, cluster dynamics value is in the order of 1e-7
+  #   Dsurf = 16.65271
+  #   surf_weight = 100.0 # 30 is the ptefactor for normalizing the function
+  #   gb_weight = 1000.0 # 9 is the ptefactor for normalizing the function
+  #   bulk_weight = 1.0
+  #   void_weight = 1000.0
+  #   Dgb = 16.65271
+  #   Dvoid = 16.65271
+  #   outputs = exodus
+  #   output_properties = 'Dv'
+  # []
   [Mobility_v]
     type = DerivativeParsedMaterial
-    f_name = Dchi
-    material_property_names = 'D chi'
-    function = 'D*chi'
+    f_name = Dvchi
+    material_property_names = 'Dv chiv'
+    function = 'Dv*chiv'
     args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
     derivative_order = 2
+    outputs = exodus
+    output_properties = 'Dvchi'
   []
+  # [Diff_gm]
+  #   type = PolycrystalDiffusivity
+  #   c = etab
+  #   v = 'eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+  #   diffusivity = Dg
+  #   Dbulk = 0.0175 # cluster dynamics data from Mathews 2019, Turnbull value is 0.0215 nm^2/s
+  #   Dsurf = 0.0175
+  #   surf_weight = 100000.0 # 30 is the ptefactor for normalizing the function
+  #   gb_weight = 1000000.0 # 9 is the ptefactor for normalizing the function
+  #   bulk_weight = 1.0
+  #   void_weight = 1000000.0
+  #   Dgb = 0.0175
+  #   Dvoid = 0.0175
+  #   outputs = exodus
+  #   output_properties = 'Dg'
+  # []
+
+  # [Diff_g]
+  #   type = DerivativeParsedMaterial
+  #   f_name = Dg
+  #   args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+  #   material_property_names = 'Dgm hm hb'
+  #   function = 'hm*Dgm+10*Dgm*hb'
+  #   outputs = exodus
+  #   output_properties = 'Dg'
+  # []
+
+  [Mobility_g]
+    type = DerivativeParsedMaterial
+    f_name = Dgchi
+    material_property_names = 'Dg chig'
+    function = 'Dg*chig'
+    args = 'etab eta0 eta1 eta2 eta3 eta4 eta5 eta6 eta7 eta8 eta9 eta10 eta11 eta12 eta13 eta14'
+    derivative_order = 2
+    outputs = exodus
+    output_properties = 'Dgchi'
+  []
+
   [constants]
     type = GenericConstantMaterial
-    prop_names = 'kappa   mu       L      Va       cb_eq  cgb_eq kb        gmb   gmm  T    f0        '
-                 'D  kB      burg_vec  G_mod'
-    prop_values = '70.2   5.62    4.01e-5 0.04092   0.56  0.44    321.15     1.5	  1.5 1100 4.814  '
-                  '1.0 8.6173324e-5   0.5      400.0'
+    prop_names = 'kappa   mu        L      Lv      Va        cb_eq  cgb_eq    kb      kgb      gmb    gmm    T    f0   '
+                 '  kB           burg_vec  G_mod YXe  Dg       Dv'
+    prop_values = '140.45   2.81    1.08e-6 1.08e-5 0.04092   1.0    1.0037  245.0   39.51    1.5	  1.5   1000  -19.36 '
+                  '8.6173324e-5   0.5      400.0 0.25 9.351e-3 1.67'
   []
+
+  [f0_test]
+    type = ParsedMaterial
+    f_name = f0_test
+    material_property_names = 'T'
+    function = '0.0049*T-0.5799'
+    outputs = exodus
+  []
+
   [cm_eq]
     type = ParsedMaterial
     f_name = cm_eq
@@ -1035,97 +1190,400 @@
     constant_names = 'kB           Efv'
     constant_expressions = '8.6173324e-5 3.0'
     function = 'exp(-Efv/(kB*T))'
+    outputs = exodus
   []
+
   [kvmatrix_parabola]
     type = ParsedMaterial
-    f_name = km
+    f_name = kmv
     material_property_names = 'T  cm_eq kB Va'
     constant_names = 'c0v  Efv     al'
-    constant_expressions = '0.01 3.0 log(c0v)-log(1-c0v)'
+    constant_expressions = '0.008 3.0 log(c0v)-log(1-c0v)'
     function = '(kB*T/Va*al+Efv/Va)/(c0v-cm_eq)'
+    outputs = exodus
   []
+  [kgmatrix_parabola]
+    type = ParsedMaterial
+    f_name = kmg
+    material_property_names = 'T  cm_eq kB Va'
+    constant_names = 'c0v  Efv     al'
+    constant_expressions = '0.008 3.0 log(c0v)-log(1-c0v)'
+    function = '(kB*T/Va*al+Efv/Va)/(c0v-cm_eq)'
+    outputs = exodus
+  []
+
+  [pg_vdw]
+    type = ParsedMaterial
+    f_name = pg_vdw
+    material_property_names = 'T Va'
+    args = 'cg'
+    constant_names = 'kgb b'
+    constant_expressions = '8.6173324e-5 0.085'
+    function = 'cg*kgb*T/(Va-cg*b)'
+    outputs = exodus
+  []
+
+  # [./XeRate]
+  #   type = ParsedMaterial
+  #   f_name = XeRate
+  #   material_property_names = 'hm'
+  #   args = 'time XolotlXeRate'  # XolotlXeRate is in Xe/(nm^3 * s) & Va is in Xe/nm^3
+  #   # function = 'if(time < 0, 0, XolotlXeRate * hm)'
+  #   function = 'if(time < 0, 0, XolotlXeRate)'
+  #   outputs = exodus
+  # [../]
+
+  # [./VacRate]
+  #   type = ParsedMaterial
+  #   f_name = VacRate
+  #   material_property_names = 'XeRate'
+  #   function = '1.2*XeRate'
+  #   outputs = exodus
+  # [../]
+  # [./VacRate]
+  #   type = ParsedMaterial
+  #   f_name = VacRate
+  #   material_property_names = 'XeRate'
+  #   function = '4.0*XeRate'
+  #   outputs = exodus
+  # [../]
+
+  [./XeRate_ref]
+    type = ParsedMaterial
+    f_name = XeRate0
+    material_property_names = 'Va hm'
+    constant_names = 's0'
+    constant_expressions = '2.35e-9'  # in atoms/(nm^3 * s)
+    args = 'time'
+    function = 'if(time < 0, 0, s0 * hm)'
+    outputs = exodus
+  [../]
+  [./VacRate_ref]
+    type = ParsedMaterial
+    f_name = VacRate0
+    material_property_names = 'YXe XeRate0'
+    args = 'time'
+    function = 'if(time < 0, 0, XeRate0 / YXe)'
+    outputs = exodus
+  [../]
+  # [dislocation_density]
+  #   type = PolycrystalDislocationDensityMaterial
+  #   grain_tracker = grain_tracker
+  #   burnup_constant = 4.2654e-5
+  #   outputs = exodus
+  #   burgers_vector = 0.5
+  #   shear_modulus = 400 # eV/nm^3 =  64.1 GPa
+  #   op_num = 15
+  #   time_scale = 1 #s
+  #   length_scale = 1e-9 #nm
+  # []
+  [dislocation_density]
+    type = PolycrystalDislocationDensity
+    grain_tracker = grain_tracker
+    burnup_constant = 4.2654e-7
+    outputs = exodus
+    output_properties = 'dislocation_density sum_h_OP shear_modulus burgers_vector burnup'
+    burgers_vector = 5e-1 #nm, maybe it's a little smaller per Nogita and Une
+    shear_modulus = 400 # eV/nm^3 =  73 GPa
+    time_scale = 1 #s
+    length_scale = 1e-9 #nm
+  []
+  [nucleation_rate]
+    type = SubgrainNucleationRate
+    scale_factor = 3e-4
+    bounds = bnds
+    bubble = etab
+    bubble_bias = 0.5
+    subgrain_radius = 20
+    interface_energy = 9.363
+    outputs = exodus
+    # critical_density = 0.000586138 # dislocation density at 44 GWd/t, nm/nm^3
+  []
+  # [nucleation_rate]
+  #   type = DislocationNucleationRate
+  #   k0 = 3e-4
+  #   bounds = bnds
+  #   outputs = exodus
+  #   critical_density = 0.000586138 # dislocation density at 44 GWd/t, nm/nm^3
+  # []
+[]
+
+# [MultiApps]
+#   [./sub_app]
+#     type = TransientMultiApp
+#     positions = '0 0 0'
+#     input_files = 'xolotl_subapp.i'
+#     app_type = coupling_xolotlApp
+#     execute_on = TIMESTEP_END
+#     library_path = 'lib'
+#   [../]
+# []
+
+# [Transfers]
+# [./fromsubrate]
+# type = MultiAppInterpolationTransfer
+# direction = from_multiapp
+# multi_app = sub_app
+# source_variable = Auxv
+# variable = XolotlXeRate
+# [../]
+# [./fromsubmono]
+# type = MultiAppInterpolationTransfer
+# direction = from_multiapp
+# multi_app = sub_app
+# source_variable = AuxMono
+# variable = XolotlXeMono
+# [../]
+# [./fromsubfrac]
+# type = MultiAppInterpolationTransfer
+# direction = from_multiapp
+# multi_app = sub_app
+# source_variable = AuxFrac
+# variable = XolotlVolumeFraction
+# [../]
+# [./tosub]
+# type = MultiAppInterpolationTransfer
+# direction = to_multiapp
+# multi_app = sub_app
+# source_variable = bnds
+# variable = AuxGB
+# [../]
+# []
+
+
+[Postprocessors]
+  [DOFs_NL]
+    type = NumDOFs
+    execute_on = 'initial timestep_end'
+    system = NL
+  []
+  [DOFs_total]
+    type = NumDOFs
+    execute_on = 'initial timestep_end'
+  []
+  [dt]
+    type = TimestepSize
+  []
+  [memory]
+    type = MemoryUsage
+  []
+  [nnuc]
+    type = DiscreteNucleationData
+    inserter = inserter
+  []
+  [total_time]
+    type = PerfGraphData
+    execute_on = 'INITIAL TIMESTEP_END'
+    data_type = 'TOTAL'
+    section_name = 'Root'
+  []
+  [run_time]
+    type = ChangeOverTimePostprocessor
+    postprocessor = total_time
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [etab_total_abs]
+    type = ElementIntegralVariablePostprocessor
+    variable = etab
+    use_absolute_value = true
+  []
+  [etab_total]
+    type = ElementIntegralVariablePostprocessor
+    variable = etab
+  []
+  [cg_total]
+    type = ElementIntegralVariablePostprocessor
+    variable = cg
+  []
+  [cv_total]
+    type = ElementIntegralVariablePostprocessor
+    variable = cv
+  []
+  [cv_mat_total]
+    type = ElementIntegralMaterialProperty
+    mat_prop = cv_mat
+  []
+  [cg_mat_total]
+    type = ElementIntegralMaterialProperty
+    mat_prop = cg_mat
+  []
+  [etab_avg]
+    type = ElementAverageValue
+    variable = etab
+  []
+  [etab_abs_avg]
+    type = ElementAverageValue
+    variable = etab
+    use_absolute_value = true
+  []
+  [bnds_avg]
+    type = ElementAverageValue
+    variable = bnds
+  []
+  [ngrains]
+    type = FeatureFloodCount
+    variable = bnds
+    threshold = 0.7
+  []
+  [num_grains]
+    type = FeatureFloodCount
+    variable = unique_grains
+    #thresold = 0.3
+  []
+  [area]
+    type = GrainBoundaryArea
+    grains_per_side = 2
+  []
+  [area_bubble]
+    type = GrainBoundaryArea
+    grains_per_side = 1
+  []
+  [feature_counter]
+    type = FeatureFloodCount
+    variable = etab
+    threshold = 0.5
+    compute_var_to_feature_map = true
+    execute_on = 'initial timestep_end'
+  []
+  [porosity]
+    type = Porosity
+    variable = etab
+  []
+  [max_cg]
+    type = ElementExtremeMaterialProperty
+    mat_prop = cg_mat
+    value_type = max
+  []
+  [max_pressure]
+    type = ElementExtremeMaterialProperty
+    mat_prop = pg_vdw
+    value_type = max
+  []
+  [min_pressure]
+    type = ElementExtremeMaterialProperty
+    mat_prop = pg_vdw
+    value_type = min
+  []
+  # [Xe_mono_total]
+  #   type = ElementIntegralVariablePostprocessor
+  #   variable = XolotlXeMono
+  # []
+  # [Xe_frac_total]
+  #   type = ElementIntegralVariablePostprocessor
+  #   variable = XolotlVolumeFraction
+  # []
+  # [Xe_frac_max]
+  #   type = ElementExtremeValue
+  #   variable = XolotlVolumeFraction
+  # []
+  # [Xe_rate_total]
+  #   type = ElementIntegralVariablePostprocessor
+  #   variable = XolotlXeRate
+  # []
 []
 
 [UserObjects]
+  [voronoi]
+    type = PolycrystalVoronoi
+    rand_seed = 123
+    grain_num = 4
+    # file_name = grains100.txt
+  []
+  [inserter]
+    # The inserter runs at the end of each time step to add nucleation events
+    # that happend during the timestep (if it converged) to the list of nuclei
+    type = DiscreteNucleationInserter
+    hold_time = 0
+    time_dependent_statistics = false
+    probability = nucleation_rate
+    radius = 20
+  []
+  [map]
+    # The map UO runs at the beginning of a timestep and generates a per-element/qp
+    # map of nucleus locations. The map is only regenerated if the mesh changed or
+    # the list of nuclei was modified.
+    # The map converts the nucleation points into finite area objects with a given radius.
+    type = DiscreteNucleationMap
+    # radius = 20
+    int_width = 20
+    periodic = eta0
+    inserter = inserter
+  []
+  # [grain_tracker]
+  #   type = GrainTracker
+  #   compute_var_to_feature_map = true
+  #   execute_on = 'initial timestep_begin'
+  #   thresold = 0.7
+  #   connecting_thresold = 0.01
+  #   halo_level = 3
+  #   remap_grains = false
+  #   compute_halo_maps = true
+  # []
   [grain_tracker]
-    type = GrainTracker
+    type = GrainTrackerDislocationsRandom
     compute_var_to_feature_map = true
     execute_on = 'initial timestep_begin'
+    # dislocation_density_reader = dislocation_density_file
+    prefactor = 2e-2
+    deformed_grain_num = 4
+    compute_halo_maps = true # Only necessary for displaying HALOS
     halo_level = 3
+    rand_seed = 198756
+    #threshold = 0.2
+    #connecting_threshold = 0.15
+    reserve_op = 1
+    reserve_op_threshold = 0.05
+    # thresold = 0.7
+    # connecting_thresold = 0.01
+    # add_zero_density_grains = true
+    # add_default_density_grains = true
+    default_density = 1e-5
     remap_grains = true
+    # polycrystal_ic_uo = voronoi
     tolerate_failure = true
   []
-  [sol]
-    type = SolutionUserObject
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_b150_exodus.e-s6740
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_b200_exodus.e-s7356
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_exodus.e-s5762
-    mesh = 2022_10_10_HBS_bub_gas_nuc_T1100_test_exodus.e-s400
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_T1100_exodus.e-s1000
-    # mesh = 2022_05_07_HBS_bub_gas_xolotl_sat_test6_vsrc_T1000_Dv_exodus.e-s1500
-    # timestep = latest
+[]
+
+[BCs]
+  [Periodic]
+    [all]
+      auto_direction = 'x y'
+    []
   []
 []
 
-[Postprocessors]
-  [feature_counter]
-    type = FeatureFloodCount
-    variable = unique_grains
-    threshold = 0.1
-    compute_var_to_feature_map = true
-    execute_on = 'initial timestep_end'
+[Adaptivity]
+  initial_steps = 3
+  max_h_level = 3
+  marker = err
+  [Markers]
+    [err_bnds]
+      type = ErrorFractionMarker
+      coarsen = 0.01
+      refine = 0.8
+      indicator = ind_bnds
+    []
+    [err_b]
+      type = ErrorFractionMarker
+      coarsen = 0.01
+      refine = 0.8
+      indicator = ind_b
+    []
+    [err]
+      type = ComboMarker
+      markers = 'err_bnds err_b'
+    []
   []
-  [num_bub]
-    type = FeatureFloodCount
-    variable = etab
-    compute_var_to_feature_map = true
-    execute_on = 'initial timestep_end'
+  [Indicators]
+    [ind_bnds]
+      type = GradientJumpIndicator
+      variable = bnds
+    []
+    [ind_b]
+      type = GradientJumpIndicator
+      variable = etab
+    []
   []
-  [num_grain]
-    type = FeatureFloodCount
-    variable = bnds
-    compute_var_to_feature_map = true
-    execute_on = 'initial timestep_end'
-  []
-  [Volume]
-    type = VolumePostprocessor
-    execute_on = 'initial'
-  []
-  [bub_fraction]
-    type = FeatureVolumeFraction
-    mesh_volume = Volume
-    feature_volumes = bub_volumes
-    execute_on = 'initial timestep_end'
-  []
-  # [new_grain]
-  #   type = RecrystallizationFraction
-  #   mesh_volume = Volume
-  #   feature_volumes = feature_volumes
-  #   initial_grains = 4
-  #   execute_on = 'timestep_end'
-  # []
-  [avg_grain_volumes]
-    type = AverageGrainVolume
-    feature_counter = grain_tracker
-    execute_on = 'initial timestep_end'
-  []
-[]
-
-[VectorPostprocessors]
-  [feature_volumes]
-    type = FeatureVolumeVectorPostprocessor
-    flood_counter = grain_tracker
-
-    # Turn on centroid output
-    output_centroids = false
-    execute_on = 'timestep_end'
-  []
-  [./bub_volumes]
-    type = FeatureVolumeVectorPostprocessor
-    flood_counter = num_bub
-    execute_on = 'initial timestep_end'
-    # outputs = none
-  [../]
 []
 
 [Preconditioning]
@@ -1138,25 +1596,53 @@
 [Executioner]
   type = Transient
   scheme = 'BDF2'
-
   solve_type = PJFNK
-  line_search = basic
-
   petsc_options_iname = '-pc_type -ksp_grmres_restart -sub_ksp_type -sub_pc_type -pc_asm_overlap  '
                         '-pc_factor_shift_type -pc_factor_shift_amount'
   petsc_options_value = 'asm         31   preonly   ilu      1  NONZERO 1e-8'
+  # petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart -pc_factor_shift_type'
+  # petsc_options_value = 'hypre    boomeramg      31 nonzero'
+  # petsc_options_iname = '-pc_type -ksp_type -ksp_gmres_restart'
+  # petsc_options_value = 'bjacobi  gmres     30'
   petsc_options = '-ksp_converged_reason -snes_converged_reason'
-
+  automatic_scaling = true
   l_tol = 1.0e-3
   l_max_its = 20
   nl_max_its = 12
-  nl_rel_tol = 1.0e-8
+  nl_rel_tol = 1.0e-6
   nl_abs_tol = 1.0e-8
+  # num_steps = 2
 
-  num_steps = 2
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    dt = 10.0 #s
+    cutback_factor = 0.85
+    growth_factor = 1.2
+    optimal_iterations = 6
+    iteration_window = 1
+  []
+
+  dtmax = 800000
+  end_time = 1e8
 []
 
 [Outputs]
   csv = true
-  exodus = true
+  perf_graph = true
+  checkpoint = true
+
+  # [console]
+  #   type = Console
+  #   max_rows = 10
+  #   interval = 1
+  # []
+  [exodus]
+    type = Exodus
+    interval = 10
+    execute_on = 'INITIAL TIMESTEP_END FINAL'
+  []
+[]
+
+[Debug]
+  show_var_residual_norms = true
 []
